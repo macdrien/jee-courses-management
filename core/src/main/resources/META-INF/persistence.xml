@@ -3,7 +3,7 @@
     <persistence-unit name="courses-management">
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:courses-management"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:courses-management;INIT=RUNSCRIPT FROM 'classpath:create.sql'"/>
             <property name="javax.persistence.jdbc.user" value="lo54"/>
             <property name="javax.persistence.jdbc.password" value=""/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
