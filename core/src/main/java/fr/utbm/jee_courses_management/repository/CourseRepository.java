@@ -34,4 +34,18 @@ public class CourseRepository {
 
         return courses;
     }
+
+    /**
+     * Save a new {@link Course} in database.
+     *
+     * @param course The {@link Course} to save.
+     */
+    public void save(Course course) {
+        if (entityManager == null)
+            entityManager = entityManagerFactory.createEntityManager();
+
+        entityManager.getTransaction().begin();
+        entityManager.merge(course);
+        entityManager.getTransaction().commit();
+    }
 }
