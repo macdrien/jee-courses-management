@@ -33,15 +33,4 @@ public class CourseRepository implements Serializable {
 
         return courses;
     }
-
-    /**
-     * Save a new {@link Course} in database.
-     *
-     * @param course The {@link Course} to save.
-     */
-    public void save(Course course) {
-        entityManager.getTransaction().begin();
-        entityManager.merge(course);
-        entityManager.getTransaction().commit();
-    }
 }
