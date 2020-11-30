@@ -40,6 +40,6 @@ public class CourseRepositoryTest {
 
         List<Course> courses = List.of(testCourse1, testCourse2);
 
-        assertEquals(courses, repository.getCourses());
+        assertEquals(courses, repository.getCourses(false));
     }
 }

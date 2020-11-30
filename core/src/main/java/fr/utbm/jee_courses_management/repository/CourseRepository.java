@@ -12,8 +12,11 @@ public class CourseRepository implements Serializable {
 
     private EntityManager entityManager;
 
+    private final CourseSessionRepository courseSessionRepository;
+
     public CourseRepository() {
         entityManager = EntityManagerFactory.getEntityManager();
+        courseSessionRepository = new CourseSessionRepository();
     }
 
     /**
@@ -21,12 +24,16 @@ public class CourseRepository implements Serializable {
      *
      * @return A {List} containing all found courses. The returned List can be empty but it cannot be null.
      */
-    public List<Course> getCourses() {
+    public List<Course> getCourses(boolean loadSessions) {
         List<Course> courses = new ArrayList<>();
         entityManager.createQuery("from Course").getResultList().forEach(result -> {
             if (result instanceof Course) {
                 entityManager.detach(result);
                 Course course = (Course) result;
+
+                if (loadSessions)
+                    course.setSessions(courseSessionRepository.getCourseSessionsByCourseId(course.getId()));
+
                 courses.add(course);
             }
         });

@@ -18,7 +18,7 @@ public class CourseServiceImpl implements CourseService {
     /** @see fr.utbm.jee_courses_management.service.CourseService#getCourses(Filter) */
     @Override
     public List<Course> getCourses(Filter filter) {
-        List<Course> courses = repository.getCourses();
+        List<Course> courses = repository.getCourses(true);
 
         if (filter != null) {
             // TODO Filtering system
