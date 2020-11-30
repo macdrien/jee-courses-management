@@ -10,8 +10,8 @@ CREATE TABLE locations (
 
 CREATE TABLE course_sessions (
     id_course_session INTEGER PRIMARY KEY AUTO_INCREMENT,
-    start_date TIMESTAMP NOT NULL,
-    end_date TIMESTAMP NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
     max_students INTEGER,
     id_course INTEGER NOT NULL,
     id_location INTEGER NOT NULL,
