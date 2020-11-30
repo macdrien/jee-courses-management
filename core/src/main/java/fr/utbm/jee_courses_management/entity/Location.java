@@ -20,4 +20,8 @@ public class Location {
 
     @Column(name = "city", nullable = false)
     private String city;
+
+    public Location(String city) {
+        this.city = city;
+    }
 }
