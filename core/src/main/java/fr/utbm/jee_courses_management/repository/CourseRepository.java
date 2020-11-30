@@ -23,13 +23,13 @@ public class CourseRepository implements Serializable {
      */
     public List<Course> getCourses() {
         List<Course> courses = new ArrayList<>();
-        for (Object result : entityManager.createQuery("from Course").getResultList()) {
+        entityManager.createQuery("from Course").getResultList().forEach(result -> {
             if (result instanceof Course) {
                 entityManager.detach(result);
                 Course course = (Course) result;
                 courses.add(course);
             }
-        }
+        });
 
         return courses;
     }
