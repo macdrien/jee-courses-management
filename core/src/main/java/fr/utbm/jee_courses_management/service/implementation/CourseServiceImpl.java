@@ -3,6 +3,7 @@ package fr.utbm.jee_courses_management.service.implementation;
 import fr.utbm.jee_courses_management.entity.Course;
 import fr.utbm.jee_courses_management.repository.CourseRepository;
 import fr.utbm.jee_courses_management.service.CourseService;
+import fr.utbm.jee_courses_management.util.Filter;
 
 import java.util.List;
 
@@ -14,10 +15,16 @@ public class CourseServiceImpl implements CourseService {
         repository = new CourseRepository();
     }
 
-    /** @see fr.utbm.jee_courses_management.service.CourseService#getCourses() */
+    /** @see fr.utbm.jee_courses_management.service.CourseService#getCourses(Filter) */
     @Override
-    public List<Course> getCourses() {
-        return repository.getCourses();
+    public List<Course> getCourses(Filter filter) {
+        List<Course> courses = repository.getCourses();
+
+        if (filter != null) {
+            // TODO Filtering system
+        }
+
+        return courses;
     }
 
 }

@@ -13,7 +13,7 @@ public class JeeCoursesManagement {
 
         CourseController controller = new CourseController();
 
-        for (Course course : controller.getCourses())
+        for (Course course : controller.getCourses(null))
             System.out.println(course);
     }
 }
