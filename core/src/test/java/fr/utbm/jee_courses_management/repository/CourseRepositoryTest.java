@@ -25,9 +25,9 @@ public class CourseRepositoryTest {
         CourseRepository repository = new CourseRepository();
 
         final int TEST_COURSE_ID_1 = 1;
-        final String TEST_COURSE_TITLE_1 = "title";
+        final String TEST_COURSE_TITLE_1 = "LO54";
         final int TEST_COURSE_ID_2 = 2;
-        final String TEST_COURSE_TITLE_2 = "second title";
+        final String TEST_COURSE_TITLE_2 = "AD50";
 
         Course testCourse1 = new Course();
         testCourse1.setId(TEST_COURSE_ID_1);
