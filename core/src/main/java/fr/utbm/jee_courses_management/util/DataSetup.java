@@ -48,14 +48,14 @@ public class DataSetup {
 
         session2.setStartingDate(LocalDate.of(2020, 7, 15));
         session2.setEndingDate(LocalDate.of(2021, 1, 23));
-        session1.setCourse(course2);
-        session1.setLocation(location1);
+        session2.setCourse(course2);
+        session2.setLocation(location1);
 
         session3.setStartingDate(LocalDate.of(2020, 4, 12));
         session3.setEndingDate(LocalDate.of(2020, 10, 10));
-        session1.setMaxStudents(25);
-        session1.setCourse(course2);
-        session1.setLocation(location3);
+        session3.setMaxStudents(25);
+        session3.setCourse(course2);
+        session3.setLocation(location3);
 
         entityManager.getTransaction().begin();
         entityManager.persist(session1);
