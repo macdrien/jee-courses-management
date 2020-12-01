@@ -8,6 +8,7 @@ import fr.utbm.jee_courses_management.service.CourseService;
 import fr.utbm.jee_courses_management.util.Filter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CourseServiceImpl implements CourseService {
 
@@ -26,7 +27,19 @@ public class CourseServiceImpl implements CourseService {
         List<Course> courses = repository.getCourses(true);
 
         if (filter != null) {
-            // TODO Filtering system
+            courses = courses.stream()
+                    .filter(course -> filter.getKeyword() == null || course.getTitle().contains(filter.getKeyword()))
+                    .collect(Collectors.toList());
+            courses.forEach(course -> course.setSessions(
+                    course.getSessions().stream().filter(session -> (
+                    (filter.getStartingDate() == null ||
+                        session.getStartingDate().isEqual(filter.getStartingDate()) ||
+                        session.getStartingDate().isAfter(filter.getStartingDate())) &&
+                        (filter.getEndingDate() == null ||
+                            session.getEndingDate().isEqual(filter.getEndingDate()) ||
+                            session.getEndingDate().isAfter(filter.getEndingDate())) &&
+                        (filter.getCity() == null || session.getLocation().getCity().equals(filter.getCity()))
+            )).collect(Collectors.toList())));
         }
 
         return courses;
