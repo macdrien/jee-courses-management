@@ -26,11 +26,25 @@ public class CourseSessionRepository implements Serializable {
 
     public List<CourseSession> getCourseSessionsByCourseId(Integer courseId) {
         List<CourseSession> sessions = new ArrayList<>();
-        for (Object result:
-                entityManager.createQuery("from CourseSession session where session.course.id = :courseId")
-                        .setParameter("courseId", courseId).getResultList())
-            if (result instanceof CourseSession)
-                sessions.add((CourseSession) result);
+
+        entityManager.createQuery(
+                "from CourseSession session where session.course.id = :courseId")
+                .setParameter("courseId", courseId)
+                .getResultList().forEach(result -> {
+                    if (result instanceof CourseSession) {
+                        entityManager.detach(result);
+                        CourseSession session = (CourseSession) result;
+
+                        /*
+                         * Set to null to avoid StackOverflowException.
+                         * We know the course so we don't need it. That stop the loop between the Course and CourseSession.
+                         */
+                        session.setCourse(null);
+
+                        sessions.add(session);
+                    }
+                });
+
         return sessions;
     }
 }

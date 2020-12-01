@@ -1,7 +1,9 @@
 package fr.utbm.jee_courses_management.service.implementation;
 
 import fr.utbm.jee_courses_management.entity.Course;
+import fr.utbm.jee_courses_management.entity.CourseSession;
 import fr.utbm.jee_courses_management.repository.CourseRepository;
+import fr.utbm.jee_courses_management.repository.CourseSessionRepository;
 import fr.utbm.jee_courses_management.service.CourseService;
 import fr.utbm.jee_courses_management.util.Filter;
 
@@ -11,8 +13,11 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository repository;
 
+    private final CourseSessionRepository sessionRepository;
+
     public CourseServiceImpl() {
         repository = new CourseRepository();
+        sessionRepository = new CourseSessionRepository();
     }
 
     /** @see fr.utbm.jee_courses_management.service.CourseService#getCourses(Filter) */
