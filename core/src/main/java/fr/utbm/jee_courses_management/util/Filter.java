@@ -37,7 +37,6 @@ public class Filter implements Serializable {
      *     <li>false if keyword is not in the course title</li>
      * </ul>
      */
-    // TODO Test
     public static boolean filterCourseTitle(Course course, String keyword) {
         return course.getTitle().contains(keyword);
     }

@@ -26,7 +26,7 @@ public class DataSetup {
                 location3 = new Location();
         location1.setCity("Belfort");
         location2.setCity("Mulhouse");
-        location3.setCity("Montbéliard");
+        location3.setCity("Montbeliard");
 
         entityManager.getTransaction().begin();
         entityManager.persist(course1);
