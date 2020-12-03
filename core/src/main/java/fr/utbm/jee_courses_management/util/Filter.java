@@ -67,7 +67,6 @@ public class Filter implements Serializable {
      *     <li>false if endingDate is null or if the session finish after it.</li>
      * </ul>
      */
-    // TODO Test
     public static boolean filterSessionFinishBefore(CourseSession session, LocalDate endingDate) {
         return session.getEndingDate().isEqual(endingDate) || session.getEndingDate().isBefore(endingDate);
     }

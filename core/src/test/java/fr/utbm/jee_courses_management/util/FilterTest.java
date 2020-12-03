@@ -87,4 +87,22 @@ public class FilterTest {
 
         sessions.forEach(session -> assertTrue(Filter.filterSessionFinishBefore(session, LocalDate.MAX)));
     }
+
+    /** Test method for {@link Filter#filterSessionFinishBefore(CourseSession, LocalDate)} */
+    @Test
+    public void testFilterSessionFinishBeforeWithOnlyOnDateEndingCondition() {
+        CourseSessionRepository repository = new CourseSessionRepository();
+        List<CourseSession> sessions = repository.getCourseSessions();
+
+        sessions.forEach(session -> assertTrue(Filter.filterSessionFinishBefore(session, session.getEndingDate())));
+    }
+
+    /** Test method for {@link Filter#filterSessionFinishBefore(CourseSession, LocalDate)} */
+    @Test
+    public void testFilterSessionFinishBeforeWithOnlyToLateEndingCondition() {
+        CourseSessionRepository repository = new CourseSessionRepository();
+        List<CourseSession> sessions = repository.getCourseSessions();
+
+        sessions.forEach(session -> assertFalse(Filter.filterSessionFinishBefore(session, LocalDate.MIN)));
+    }
 }
