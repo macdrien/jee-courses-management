@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -25,6 +27,38 @@ public class Filter implements Serializable {
 
     /** The name of the city where the session have to take place */
     private String city;
+
+    /**
+     * Filter a {@link List} of {@link Course} and their {@link CourseSession} following criteria in the given {@link Filter}.
+     *
+     * @param courses The courses to filter
+     * @param filter The filter to apply. It must be not null.
+     * @return The filtered list of courses with the filtered sessions.
+     */
+    // TODO Test
+    public static List<Course> filterCoursesAndSessions(List<Course> courses, Filter filter) {
+        // Filter courses
+        String keyword = filter.getKeyword();
+        if (keyword != null && !keyword.equals(""))
+            courses = courses.stream()
+                    .filter(course -> Filter.filterCourseTitle(course, keyword))
+                    .collect(Collectors.toList());
+
+        // Filter sessions
+        LocalDate startingDate = filter.getStartingDate(),
+                endingDate = filter.getEndingDate();
+        String city = filter.getCity();
+        if (startingDate != null || endingDate != null || (city != null && !city.equals("")))
+            courses.forEach(course -> course.setSessions(
+                    course.getSessions().stream().filter(session -> (
+                            (startingDate == null || Filter.filterSessionBeginAfter(session, startingDate)) &&
+                                    (endingDate == null || Filter.filterSessionBeginAfter(session, endingDate)) &&
+                                    (city == null || city.equals("") || Filter.filterSessionInCity(session, city))
+                    )).collect(Collectors.toList())
+            ));
+
+        return courses;
+    }
 
     /**
      * Test if a {@link Course} can be kept by testing if its title contains a given keyword.

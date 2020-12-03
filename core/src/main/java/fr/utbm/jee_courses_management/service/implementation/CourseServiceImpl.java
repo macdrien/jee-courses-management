@@ -29,25 +29,7 @@ public class CourseServiceImpl implements CourseService {
         List<Course> courses = repository.getCourses(true);
 
         if (filter != null) {
-            // Filter courses
-            String keyword = filter.getKeyword();
-            if (keyword != null && !keyword.equals(""))
-                courses = courses.stream()
-                        .filter(course -> Filter.filterCourseTitle(course, keyword))
-                        .collect(Collectors.toList());
-
-            // Filter sessions
-            LocalDate startingDate = filter.getStartingDate(),
-                      endingDate = filter.getEndingDate();
-            String city = filter.getCity();
-            if (startingDate != null || endingDate != null || (city != null && !city.equals("")))
-                courses.forEach(course -> course.setSessions(
-                        course.getSessions().stream().filter(session -> (
-                            (startingDate == null || Filter.filterSessionBeginAfter(session, startingDate)) &&
-                            (endingDate == null || Filter.filterSessionBeginAfter(session, endingDate)) &&
-                            (city == null || city.equals("") || Filter.filterSessionInCity(session, city))
-                        )).collect(Collectors.toList())
-                ));
+            courses = Filter.filterCoursesAndSessions(courses, filter);
         }
 
         return courses;
