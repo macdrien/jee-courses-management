@@ -78,4 +78,13 @@ public class FilterTest {
 
         sessions.forEach(session -> assertFalse(Filter.filterSessionBeginAfter(session, LocalDate.MAX)));
     }
+
+    /** Test method for {@link Filter#filterSessionFinishBefore(CourseSession, LocalDate)} */
+    @Test
+    public void testFilterSessionFinishBeforeWithOnlyBeforeEndingCondition() {
+        CourseSessionRepository repository = new CourseSessionRepository();
+        List<CourseSession> sessions = repository.getCourseSessions();
+
+        sessions.forEach(session -> assertTrue(Filter.filterSessionFinishBefore(session, LocalDate.MAX)));
+    }
 }

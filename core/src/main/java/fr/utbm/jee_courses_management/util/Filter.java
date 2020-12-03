@@ -69,7 +69,7 @@ public class Filter implements Serializable {
      */
     // TODO Test
     public static boolean filterSessionFinishBefore(CourseSession session, LocalDate endingDate) {
-        return session.getEndingDate().isEqual(endingDate) || session.getEndingDate().isAfter(endingDate);
+        return session.getEndingDate().isEqual(endingDate) || session.getEndingDate().isBefore(endingDate);
     }
 
     /**
