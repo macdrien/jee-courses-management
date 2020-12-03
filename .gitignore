@@ -7,4 +7,5 @@
 .settings
 
 # IDEA files
-./*.iml
+jee-courses-management.iml
+**.iml
