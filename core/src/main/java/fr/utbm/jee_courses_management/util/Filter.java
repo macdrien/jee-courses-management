@@ -52,7 +52,6 @@ public class Filter implements Serializable {
      *     <li>false if startingDate is null or if the session begins before it.</li>
      * </ul>
      */
-    // TODO Test
     public static boolean filterSessionBeginAfter(CourseSession session, LocalDate startingDate) {
         return session.getStartingDate().isEqual(startingDate) || session.getStartingDate().isAfter(startingDate);
     }
