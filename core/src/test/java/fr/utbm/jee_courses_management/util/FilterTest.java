@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Unit tests for the static methods in {@link Filter}
@@ -104,5 +105,32 @@ public class FilterTest {
         List<CourseSession> sessions = repository.getCourseSessions();
 
         sessions.forEach(session -> assertFalse(Filter.filterSessionFinishBefore(session, LocalDate.MIN)));
+    }
+
+    /** Test method for {@link Filter#filterSessionInCity(CourseSession, String)} */
+    @Test
+    public void testFilterSessionInCity() {
+        CourseSessionRepository repository = new CourseSessionRepository();
+        List<CourseSession> sessions = repository.getCourseSessions();
+        List<CourseSession> expected = sessions.subList(0, 2);
+
+        sessions = sessions.stream()
+                .filter(session -> Filter.filterSessionInCity(session, "Belfort"))
+                .collect(Collectors.toList());
+
+        assertEquals(expected, sessions);
+    }
+
+    /** Test method for {@link Filter#filterSessionInCity(CourseSession, String)} */
+    @Test
+    public void testFilterSessionInCityWithoutCorresponding() {
+        CourseSessionRepository repository = new CourseSessionRepository();
+        List<CourseSession> sessions = repository.getCourseSessions();
+
+        sessions = sessions.stream()
+                .filter(session -> Filter.filterSessionInCity(session, "Non existing city"))
+                .collect(Collectors.toList());
+
+        assertEquals(List.of(), sessions);
     }
 }

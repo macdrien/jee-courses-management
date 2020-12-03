@@ -82,7 +82,6 @@ public class Filter implements Serializable {
      *     <li>false if the session does not takes place in the given city</li>
      * </ul>
      */
-    // TODO Test
     public static boolean filterSessionInCity(CourseSession session, String city) {
         return session.getLocation().getCity().equals(city);
     }
