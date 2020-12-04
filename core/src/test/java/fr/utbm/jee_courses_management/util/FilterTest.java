@@ -198,17 +198,6 @@ public class FilterTest {
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
-    @Test
-    public void testFilterCoursesAndSessionsWithCityTakingAllSessionsAndNoOtherOption() {
-        Filter filter = new Filter();
-        // Available cities are "Mulhouse", "Belfort" and "Montbeliard"
-        filter.setCity("e");
-        List<Course> courses = courseRepository.getCourses(true);
-
-        assertEquals(courses, Filter.filterCoursesAndSessions(courses, filter));
-    }
-
-    /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
     // cf comment on {@link FilterTest#testFilterCoursesAndSessionsWithNonNullStartingDateTakingNoCoursesAndNoOtherOptions()}
     @Test
     public void testFilterCoursesAndSessionsWithCityTakingNoSessionsAndNoOtherOption() {
@@ -223,18 +212,16 @@ public class FilterTest {
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
     @Test
     public void testFilterCoursesAndSessionsWithCityTakingSomeSessionsAndNoOtherOption() {
-        final String SEARCHED_NAME = "M";
+        final String SEARCHED_NAME = "Montbeliard";
         Filter filter = new Filter();
         // Available cities are "Mulhouse", "Belfort" and "Montbeliard"
         filter.setCity(SEARCHED_NAME);
         List<Course> courses = courseRepository.getCourses(true);
 
-        Filter.filterCoursesAndSessions(courses, filter).forEach(course -> {
-            course.getSessions().forEach(session -> {
-                if (!session.getLocation().getCity().contains(SEARCHED_NAME))
-                    fail("The session " + session.getId() + " taking place in/at " + session.getLocation().getCity() + " must be excluded but it is not");
-            });
-        });
+        Course expectedCourse = courses.get(1);
+        expectedCourse.setSessions(List.of(expectedCourse.getSessions().get(1)));
+
+        assertEquals(List.of(expectedCourse), Filter.filterCoursesAndSessions(courses, filter));
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
