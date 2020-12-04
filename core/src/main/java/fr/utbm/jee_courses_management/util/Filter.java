@@ -37,7 +37,7 @@ public class Filter implements Serializable {
      * @return The filtered list of courses with the filtered sessions.
      */
     public static List<Course> filterCoursesAndSessions(List<Course> courses, Filter filter) {
-        if (courses == null || courses.size() == 0)
+        if (courses == null || courses.isEmpty())
             return courses;
 
         // Filter courses
