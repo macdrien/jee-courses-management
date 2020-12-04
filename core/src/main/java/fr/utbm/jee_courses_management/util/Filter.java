@@ -30,6 +30,7 @@ public class Filter implements Serializable {
 
     /**
      * Filter a {@link List} of {@link Course} and their {@link CourseSession} following criteria in the given {@link Filter}.
+     * If a course has no session. It will not be kept.
      *
      * @param courses The courses to filter
      * @param filter The filter to apply. It must be not null.
@@ -54,10 +55,15 @@ public class Filter implements Serializable {
             courses.forEach(course -> course.setSessions(
                     course.getSessions().stream().filter(session -> (
                             (startingDate == null || Filter.filterSessionBeginAfter(session, startingDate)) &&
-                                    (endingDate == null || Filter.filterSessionBeginAfter(session, endingDate)) &&
+                                    (endingDate == null || Filter.filterSessionFinishBefore(session, endingDate)) &&
                                     (city == null || city.equals("") || Filter.filterSessionInCity(session, city))
                     )).collect(Collectors.toList())
             ));
+
+        // Remove all courses which have no session
+        courses = courses.stream()
+                .filter(course -> course.getSessions().size() != 0)
+                .collect(Collectors.toList());
 
         return courses;
     }

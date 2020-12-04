@@ -60,7 +60,7 @@ public class FilterTest {
         Filter filter = new Filter();
         List<Course> courses = courseRepository.getCourses(true);
 
-        assertEquals(courses, Filter.filterCoursesAndSessions(courses, filter));
+        assertEquals(courses.subList(0, courses.size() - 1), Filter.filterCoursesAndSessions(courses, filter));
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
@@ -70,7 +70,7 @@ public class FilterTest {
         filter.setKeyword("");
         List<Course> courses = courseRepository.getCourses(true);
 
-        assertEquals(courses, Filter.filterCoursesAndSessions(courses, filter));
+        assertEquals(courses.subList(0, courses.size() - 1), Filter.filterCoursesAndSessions(courses, filter));
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
@@ -81,7 +81,7 @@ public class FilterTest {
         filter.setKeyword("5");
         List<Course> courses = courseRepository.getCourses(true);
 
-        assertEquals(courses, Filter.filterCoursesAndSessions(courses, filter));
+        assertEquals(courses.subList(0, courses.size() - 1), Filter.filterCoursesAndSessions(courses, filter));
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
@@ -107,8 +107,7 @@ public class FilterTest {
         filter.setKeyword("50");
         List<Course> courses = courseRepository.getCourses(true);
 
-        assertEquals(List.of(courses.get(1), courses.get(2)),
-                Filter.filterCoursesAndSessions(courses, filter));
+        assertEquals(List.of(courses.get(1)), Filter.filterCoursesAndSessions(courses, filter));
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
@@ -118,7 +117,7 @@ public class FilterTest {
         filter.setStartingDate(LocalDate.MIN);
         List<Course> courses = courseRepository.getCourses(true);
 
-        assertEquals(courses, Filter.filterCoursesAndSessions(courses, filter));
+        assertEquals(courses.subList(0, courses.size() - 1), Filter.filterCoursesAndSessions(courses, filter));
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
@@ -156,7 +155,8 @@ public class FilterTest {
         filter.setEndingDate(LocalDate.MAX);
         List<Course> courses = courseRepository.getCourses(true);
 
-        assertEquals(courses, Filter.filterCoursesAndSessions(courses, filter));
+        // Do not expect the last course because it has no sessions -> It will be filtered
+        assertEquals(courses.subList(0, courses.size() - 1), Filter.filterCoursesAndSessions(courses, filter));
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
@@ -194,7 +194,7 @@ public class FilterTest {
         filter.setCity("");
         List<Course> courses = courseRepository.getCourses(true);
 
-        assertEquals(courses, Filter.filterCoursesAndSessions(courses, filter));
+        assertEquals(courses.subList(0, courses.size() - 1), Filter.filterCoursesAndSessions(courses, filter));
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
