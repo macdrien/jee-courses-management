@@ -27,12 +27,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getCourses(Filter filter) {
         List<Course> courses = repository.getCourses(true);
-
-        if (filter != null) {
-            courses = Filter.filterCoursesAndSessions(courses, filter);
-        }
-
-        return courses;
+        return filter != null ? Filter.filterCoursesAndSessions(courses, filter) : courses;
     }
 
 }
