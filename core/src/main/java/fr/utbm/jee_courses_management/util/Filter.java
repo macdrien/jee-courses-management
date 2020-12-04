@@ -35,8 +35,10 @@ public class Filter implements Serializable {
      * @param filter The filter to apply. It must be not null.
      * @return The filtered list of courses with the filtered sessions.
      */
-    // TODO Test
     public static List<Course> filterCoursesAndSessions(List<Course> courses, Filter filter) {
+        if (courses == null || courses.size() == 0)
+            return courses;
+
         // Filter courses
         String keyword = filter.getKeyword();
         if (keyword != null && !keyword.equals(""))

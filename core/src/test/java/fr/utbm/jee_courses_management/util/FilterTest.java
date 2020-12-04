@@ -36,14 +36,12 @@ public class FilterTest {
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
-    // TODO Add null courses test
     @Test
     public void testFilterCoursesAndSessionsWithNullCoursesList() {
         assertNull(Filter.filterCoursesAndSessions(null, null));
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
-    // TODO Add empty list test
     @Test
     public void testFilterCoursesAndSessionsWithEmptyCoursesList() {
         assertEquals(List.of(), Filter.filterCoursesAndSessions(List.of(), null));
