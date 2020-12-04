@@ -24,9 +24,15 @@ import java.util.stream.Collectors;
 @SelectPackages("fr.utbm.jee_courses_management")
 public class FilterTest {
 
+    private static CourseRepository courseRepository;
+
+    private static CourseSessionRepository courseSessionRepository;
+
     @BeforeAll
     public static void prepareData() {
         DataSetup.dataSetup();
+        courseRepository = new CourseRepository();
+        courseSessionRepository = new CourseSessionRepository();
     }
 
     /** Test method for {@link Filter#filterCourseTitle(Course, String)} */
@@ -35,8 +41,7 @@ public class FilterTest {
         // Get all sessions but pass into each filters
         final String KEYWORD = "5";
 
-        CourseRepository repository = new CourseRepository();
-        List<Course> courses = repository.getCourses(false);
+        List<Course> courses = courseRepository.getCourses(false);
 
         courses.forEach(course -> assertTrue(Filter.filterCourseTitle(course, KEYWORD)));
     }
@@ -47,8 +52,7 @@ public class FilterTest {
         // Get all sessions but pass into each filters
         final String KEYWORD = "Not contained";
 
-        CourseRepository repository = new CourseRepository();
-        List<Course> courses = repository.getCourses(false);
+        List<Course> courses = courseRepository.getCourses(false);
 
         courses.forEach(course -> assertFalse(Filter.filterCourseTitle(course, KEYWORD)));
     }
@@ -56,8 +60,7 @@ public class FilterTest {
     /** Test method for {@link Filter#filterSessionBeginAfter(CourseSession, LocalDate)} */
     @Test
     public void testFilterSessionBeginAfterWithOnlyAfterBeginningCondition() {
-        CourseSessionRepository repository = new CourseSessionRepository();
-        List<CourseSession> sessions = repository.getCourseSessions();
+        List<CourseSession> sessions = courseSessionRepository.getCourseSessions();
 
         sessions.forEach(session -> assertTrue(Filter.filterSessionBeginAfter(session, LocalDate.MIN)));
     }
@@ -65,8 +68,7 @@ public class FilterTest {
     /** Test method for {@link Filter#filterSessionBeginAfter(CourseSession, LocalDate)} */
     @Test
     public void testFilterSessionBeginAfterWithOnlyOnDateBeginningCondition() {
-        CourseSessionRepository repository = new CourseSessionRepository();
-        List<CourseSession> sessions = repository.getCourseSessions();
+        List<CourseSession> sessions = courseSessionRepository.getCourseSessions();
 
         sessions.forEach(session -> assertTrue(Filter.filterSessionBeginAfter(session, session.getStartingDate())));
     }
@@ -74,17 +76,15 @@ public class FilterTest {
     /** Test method for {@link Filter#filterSessionBeginAfter(CourseSession, LocalDate)} */
     @Test
     public void testFilterSessionBeginAfterWithOnlyErrors() {
-        CourseSessionRepository repository = new CourseSessionRepository();
-        List<CourseSession> sessions = repository.getCourseSessions();
+        List<CourseSession> sessions = courseSessionRepository.getCourseSessions();
 
         sessions.forEach(session -> assertFalse(Filter.filterSessionBeginAfter(session, LocalDate.MAX)));
     }
 
     /** Test method for {@link Filter#filterSessionFinishBefore(CourseSession, LocalDate)} */
     @Test
-    public void testFilterSessionFinishBeforeWithOnlyBeforeEndingCondition() {
-        CourseSessionRepository repository = new CourseSessionRepository();
-        List<CourseSession> sessions = repository.getCourseSessions();
+    public void testFilterSessionFinishBeforeWithOnlyBeforeEndingCondition() {;
+        List<CourseSession> sessions = courseSessionRepository.getCourseSessions();
 
         sessions.forEach(session -> assertTrue(Filter.filterSessionFinishBefore(session, LocalDate.MAX)));
     }
@@ -101,8 +101,7 @@ public class FilterTest {
     /** Test method for {@link Filter#filterSessionFinishBefore(CourseSession, LocalDate)} */
     @Test
     public void testFilterSessionFinishBeforeWithOnlyToLateEndingCondition() {
-        CourseSessionRepository repository = new CourseSessionRepository();
-        List<CourseSession> sessions = repository.getCourseSessions();
+        List<CourseSession> sessions = courseSessionRepository.getCourseSessions();
 
         sessions.forEach(session -> assertFalse(Filter.filterSessionFinishBefore(session, LocalDate.MIN)));
     }
@@ -110,8 +109,7 @@ public class FilterTest {
     /** Test method for {@link Filter#filterSessionInCity(CourseSession, String)} */
     @Test
     public void testFilterSessionInCity() {
-        CourseSessionRepository repository = new CourseSessionRepository();
-        List<CourseSession> sessions = repository.getCourseSessions();
+        List<CourseSession> sessions = courseSessionRepository.getCourseSessions();
         List<CourseSession> expected = sessions.subList(0, 2);
 
         sessions = sessions.stream()
@@ -124,8 +122,7 @@ public class FilterTest {
     /** Test method for {@link Filter#filterSessionInCity(CourseSession, String)} */
     @Test
     public void testFilterSessionInCityWithoutCorresponding() {
-        CourseSessionRepository repository = new CourseSessionRepository();
-        List<CourseSession> sessions = repository.getCourseSessions();
+        List<CourseSession> sessions = courseSessionRepository.getCourseSessions();
 
         sessions = sessions.stream()
                 .filter(session -> Filter.filterSessionInCity(session, "Non existing city"))
