@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,10 +21,10 @@ public class CourseSession {
     private Integer id;
 
     @Column(name = "start_date", nullable = false)
-    private LocalDateTime startingDate;
+    private LocalDate startingDate;
 
     @Column(name = "end_date", nullable = false)
-    private LocalDateTime endingDate;
+    private LocalDate endingDate;
 
     @Column(name = "max_students")
     private Integer maxStudents;

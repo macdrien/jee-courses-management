@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "COURSES")
@@ -20,4 +21,7 @@ public class Course {
 
     @Column(name = "title", nullable = false)
     private String title;
+
+    @Transient
+    private List<CourseSession> sessions;
 }
