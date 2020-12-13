@@ -1,10 +1,14 @@
 # Generated sources
 */target
+*/bin
 
 # IDEs folders
 .idea
 .vscode
-.settings
+**.settings/
+**.classpath
+**.factorypath
+
 
 # IDEA files
 **.iml
