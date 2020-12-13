@@ -12,6 +12,7 @@
 
     <modules>
         <module>core</module>
+        <module>jsp-front-end</module>
     </modules>
 
     <properties>
