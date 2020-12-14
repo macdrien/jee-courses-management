@@ -1,8 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ page import="fr.utbm.jee_courses_management.controller.CourseController" %>
-<%@ page import="fr.utbm.jee_courses_management.entity.Course"%>
-<%@ page import="fr.utbm.jee_courses_management.entity.CourseSession"%>
 <%@ page import="fr.utbm.jee_courses_management.util.Filter"%>
 <%@ page import="java.time.LocalDate" %>
 
@@ -19,7 +17,7 @@
     <title>Courses Management - list</title>
     <script src="https://code.jquery.com/jquery-1.10.2.js"
             type="text/javascript"></script>
-    <script src="js/script.js" type="text/javascript"></script>
+    <script src="js/list_script.js" type="text/javascript"></script>
 </head>
 <body>
 <h1>Courses Management - Sessions list</h1>
