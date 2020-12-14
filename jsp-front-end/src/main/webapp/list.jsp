@@ -22,17 +22,34 @@
 <body>
 <h1>Courses Management - Sessions list</h1>
 
-<ul>
-<c:forEach var="course" items="${sessionScope.courses}">
-    <li>${course.title}:<br/>
-        <ol>
-            <c:forEach var="session" items="${course.sessions}">
-                <li>Session at ${session.location.city} which begins the ${session.startingDate} and will finish the ${session.endingDate}</li>
-            </c:forEach>
-        </ol>
-    </li>
-</c:forEach>
-</ul>
+<table>
+    <thead>
+        <td>Course</td>
+        <td>City</td>
+        <td>Starting date</td>
+        <td>Ending date</td>
+        <td>Students limitation</td>
+    </thead>
+    <c:forEach var="course" items="${sessionScope.courses}">
+        <c:forEach var="courseSession" items="${course.sessions}">
+
+            <tr>
+                <td>${course.title}</td>
+                <td>${courseSession.location.city}</td>
+                <td>${courseSession.startingDate}</td>
+                <td>${courseSession.endingDate}</td>
+                <c:choose>
+                    <c:when test="${courseSession.maxStudents != null && courseSession.maxStudents > 0}">
+                        <td>${courseSession.maxStudents}</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>No limit</td>
+                    </c:otherwise>
+                </c:choose>
+            </tr>
+        </c:forEach>
+    </c:forEach>
+</table>
 
 </body>
 </html>
