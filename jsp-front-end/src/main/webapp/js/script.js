@@ -37,7 +37,7 @@ $(document).ready(function () {
                         '<td>' + session.location.city + '</td>' +
                         '<td>' + starts + '</td>' +
                         '<td>' + finish + '</td>' +
-                        '<td>' + session.maxStudents + '</td>' +
+                        '<td>' + (session.maxStudents != null ? session.maxStudents : 'No limit') + '</td>' +
                     '</tr>');
                 });
             });
