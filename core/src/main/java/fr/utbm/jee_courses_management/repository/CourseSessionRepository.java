@@ -4,6 +4,7 @@ import fr.utbm.jee_courses_management.entity.Course;
 import fr.utbm.jee_courses_management.entity.CourseSession;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,5 +47,26 @@ public class CourseSessionRepository implements Serializable {
                 });
 
         return sessions;
+    }
+
+    /**
+     * Get a {@link CourseSession} identified by the given id.
+     *
+     * @param id The id of the searched {@link CourseSession}.
+     * @return The found {@link CourseSession}.<br/>
+     *          Null if the {@link CourseSession} does not exist or if an error occurred.
+     */
+    // TODO Test
+    public CourseSession getCourseSessionById(Integer id) {
+        CourseSession result = null;
+        try {
+            result = (CourseSession) entityManager.createQuery("from CourseSession session where session.id = :id")
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (Exception exception) {
+            System.out.println("Error during the research of the CourseSession " + id + ":");
+            exception.printStackTrace();
+        }
+        return result;
     }
 }

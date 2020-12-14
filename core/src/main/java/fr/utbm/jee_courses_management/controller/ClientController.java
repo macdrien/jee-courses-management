@@ -30,13 +30,6 @@ public class ClientController implements Serializable {
      */
     // TODO Test
     public Client registerClient(Client client) {
-        if (client.getFirstname() == null || client.getFirstname().isBlank() ||
-                client.getLastname() == null || client.getLastname().isBlank() ||
-                client.getAdress() == null || client.getAdress().isBlank() ||
-                client.getPhoneNumber() == null || client.getPhoneNumber().isBlank() ||
-                client.getSession() == null)
-            return null;
-
         return service.registerClient(client);
     }
 }

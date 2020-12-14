@@ -58,10 +58,7 @@ public class ClientRepository implements Serializable {
         Client result = null;
         try {
             result = (Client) entityManager.createQuery(
-                        "from Client client" +
-                                "where client.firstname = :firstname and " +
-                                "client.lastname = :lastname and " +
-                                ".session.id = :sessionId")
+                        "from Client client where client.firstname = :firstname and client.lastname = :lastname and client.session.id = :sessionId")
                             .setParameter("firstname", firstname)
                             .setParameter("lastname", lastname)
                             .setParameter("sessionId", sessionId)
