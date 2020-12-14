@@ -7,7 +7,7 @@
 <body>
 <h1>Courses Management</h1>
 
-<p>Welcome in your courses management application. <a href="courses-list.jsp">Click here</a> to see the next sessions list</p>
+<p>Welcome in your courses management application. <a href="list.jsp">Click here</a> to see the next sessions list</p>
 
 </body>
 </html>

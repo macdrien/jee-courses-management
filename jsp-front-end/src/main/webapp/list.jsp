@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ page import="fr.utbm.jee_courses_management.controller.CourseController" %>
 <%@ page import="fr.utbm.jee_courses_management.entity.Course"%>
 <%@ page import="fr.utbm.jee_courses_management.entity.CourseSession"%>
@@ -8,7 +10,8 @@
 
 <%
     CourseController controller = new CourseController();
-    session.setAttribute("sessions", controller.getCourses(new Filter(null, LocalDate.now(), null, null)));
+    session.setAttribute("courses", controller.getCourses(new Filter(null, LocalDate.now(), null, null)));
+    System.out.println(session.getAttribute("courses"));
 %>
 
 <!DOCTYPE html>
@@ -20,8 +23,8 @@
 <h1>Courses Management - Sessions list</h1>
 
 <ul>
-<c:forEach var="course" items="${sessions}">
-    <li>${course.title}
+<c:forEach var="course" items="${sessionScope.courses}">
+    <li>${course.title}:<br/>
         <ol>
             <c:forEach var="session" items="${course.sessions}">
                 <li>Session at ${session.location.city} which begins the ${session.startingDate} and will finish the ${session.endingDate}</li>

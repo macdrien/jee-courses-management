@@ -29,3 +29,5 @@ CREATE TABLE IF NOT EXISTS clients (
     id_course_session INTEGER NOT NULL,
     CONSTRAINT client_fk_course_session FOREIGN KEY (id_course_session) REFERENCES course_sessions(id_course_session)
 );
+
+COMMIT;
