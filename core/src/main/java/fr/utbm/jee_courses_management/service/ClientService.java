@@ -4,9 +4,7 @@ import fr.utbm.jee_courses_management.entity.Client;
 
 import java.io.Serializable;
 
-/**
- * Service which run operations on or about {@link Client}.
- */
+/** Service which run operations on or about {@link Client}. */
 public interface ClientService extends Serializable {
 
     /**
