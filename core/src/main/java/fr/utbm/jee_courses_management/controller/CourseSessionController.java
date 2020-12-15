@@ -6,15 +6,29 @@ import fr.utbm.jee_courses_management.service.implementation.CourseSessionServic
 
 import java.io.Serializable;
 
+/**
+ * Controller to publish operations on {@link CourseSession}
+ */
 public class CourseSessionController implements Serializable {
 
-    private final CourseSessionService sessionService;
+    /** Service to run operations on {@link CourseSession} */
+    private final CourseSessionService service;
 
+    /** (constructor)
+     * Default constructor to initialize {@link CourseSessionService}
+     */
     public CourseSessionController() {
-        sessionService = new CourseSessionServiceImpl();
+        service = new CourseSessionServiceImpl();
     }
 
+    /**
+     * Get a {@link CourseSession} identified by the given id.
+     *
+     * @param id The identifier of the searched {@link CourseSession}
+     * @return The found {@link CourseSession}. Null if it does not exist.
+     */
+    // TODO Test
     public CourseSession getCourseSessionById(Integer id) {
-        return sessionService.getCourseSession(id);
+        return service.getCourseSession(id);
     }
 }

@@ -8,10 +8,17 @@ import fr.utbm.jee_courses_management.util.Filter;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Controller to publish operations on {@link Course}
+ */
 public class CourseController implements Serializable {
 
+    /** Service to run operations on {@link Course} */
     private final CourseService service;
 
+    /** (constructor)
+     * Default constructor to initialize {@link CourseService}
+     */
     public CourseController() {
         service = new CourseServiceImpl();
     }
@@ -23,6 +30,7 @@ public class CourseController implements Serializable {
      * @param filter An object which describes criteria for returned courses
      * @return A {@link List} of {@link Course} which match with the filter.
      */
+    // TODO Test
     public List<Course> getCourses(Filter filter) {
         return service.getCourses(filter);
     }
