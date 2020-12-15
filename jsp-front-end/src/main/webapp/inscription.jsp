@@ -2,8 +2,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%
-    session.setAttribute("courseSession",
-            new CourseSessionController().getCourseSessionById(Integer.parseInt(request.getParameter("sessionId"))));
+    String sessionId = request.getParameter("sessionId");
+    if (sessionId != null && !sessionId.isBlank())
+        session.setAttribute("courseSession",
+                new CourseSessionController().getCourseSessionById(Integer.parseInt(sessionId)));
 %>
 
 <!DOCTYPE html>
@@ -12,13 +14,15 @@
     <title>Courses Management - Inscription</title>
     <script src="https://code.jquery.com/jquery-1.10.2.js"
             type="text/javascript"></script>
-    <script src="js/list_script.js" type="text/javascript"></script>
+    <script src="js/inscription_script.js" type="text/javascript"></script>
 </head>
 
 <body>
 <h1>Courses Management - Inscription for the course ${courseSession.course.title}</h1>
 
 <p>Session at ${courseSession.location.city} from ${courseSession.startingDate} to ${courseSession.endingDate}.</p>
+
+<p id="informationMessage"></p>
 
 <form>
     <table>
@@ -34,11 +38,13 @@
             <td><input id="lastname" placeholder="Lastname" type="text" required/></td>
             <td><input id="address" placeholder="Address" type="text" required/></td>
             <td><input id="phone" placeholder="00.00.00.00.00" type="text" required/></td>
-            <td><input id="email" placeholder="Mail address" type="text" required/></td>
-            <td><input id="btnInscription" type="button" value="Register"/></td>
+            <td><input id="email" placeholder="Mail address" type="text"/></td>
+            <td><input id="btnInscription" type="button" value="Register" onclick="registerClient()"/></td>
         </tr>
     </table>
 </form>
 
 <p>Not the right session? Come back to the session list by <a href="list.jsp">clicking here</a></p>
+
+<span hidden id="sessionId">${courseSession.id}</span>
 </body>
