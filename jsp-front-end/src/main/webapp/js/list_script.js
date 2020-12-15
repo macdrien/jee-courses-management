@@ -41,7 +41,11 @@ $(document).ready(function () {
                             '<td>' + session.maxStudents + '</td><td>' + (parseInt(session.clientNumber * 100 / session.maxStudents)) + '%</td>' :
                             '<td>No limit</td><td></td>'
                         ) +
-                        '<td><input id="btnRegister-' + session.id + '" type="button" value="Register" onClick="register(' + session.id + ')"/></td>' +
+                        '<td class="button-column">' +
+                            '<button id="btnRegister-' + session.id + '" class="btn btn-outline-light" onClick="register(' + session.id + ')">' +
+                                'Register' +
+                            '</button>' +
+                        '</td>' +
                     '</tr>');
                 });
             });

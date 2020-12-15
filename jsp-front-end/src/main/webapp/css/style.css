@@ -1,0 +1,23 @@
+body {
+    padding: 5px;
+    width: 50%;
+    text-align: center;
+}
+
+.sessions-list td {
+    vertical-align: middle;
+}
+
+.filters {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+thead {
+    text-align: left;
+}
+
+.back-message {
+    display: block;
+    margin-top: 10px;
+}

@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS clients (
     firstname VARCHAR(256) NOT NULL,
     lastname VARCHAR(256) NOT NULL,
     address VARCHAR(256) NOT NULL,
-    phoneNumber CHAR(10) NOT NULL,
+    phoneNumber VARCHAR(20) NOT NULL,
     email VARCHAR(256),
     id_course_session INTEGER NOT NULL,
     CONSTRAINT client_fk_course_session FOREIGN KEY (id_course_session) REFERENCES course_sessions(id_course_session)

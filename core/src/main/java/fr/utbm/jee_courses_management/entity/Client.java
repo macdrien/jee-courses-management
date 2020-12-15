@@ -27,7 +27,7 @@ public class Client {
     @Column(name = "adress", nullable = false)
     private String adress;
 
-    @Column(name = "phone_number", nullable = false, length = 10)
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
     @Column(name = "email")
