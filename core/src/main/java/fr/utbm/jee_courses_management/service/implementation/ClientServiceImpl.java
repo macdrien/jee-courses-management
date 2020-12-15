@@ -1,14 +1,11 @@
 package fr.utbm.jee_courses_management.service.implementation;
 
 import fr.utbm.jee_courses_management.entity.Client;
-import fr.utbm.jee_courses_management.entity.CourseSession;
 import fr.utbm.jee_courses_management.repository.ClientRepository;
 import fr.utbm.jee_courses_management.service.ClientService;
 import fr.utbm.jee_courses_management.service.CourseSessionService;
 
-/**
- * An implementation of the service {@link ClientService}.
- */
+/** An implementation of the service {@link ClientService}. */
 public class ClientServiceImpl implements ClientService {
 
     /** A repository a access to the {@link Client} entity. */
@@ -18,7 +15,7 @@ public class ClientServiceImpl implements ClientService {
     private final CourseSessionService courseSessionService;
 
     /** (constructor)
-     * Default constructor which initialize the repository.
+     * Default constructor which initialize the {@link ClientRepository} and the necessary {@link CourseSessionService}.
      */
     public ClientServiceImpl() {
         repository = new ClientRepository();
@@ -31,7 +28,7 @@ public class ClientServiceImpl implements ClientService {
     public Client registerClient(Client client) {
         if (client.getFirstname() == null || client.getFirstname().isBlank() ||
                 client.getLastname() == null || client.getLastname().isBlank() ||
-                client.getAdress() == null || client.getAdress().isBlank() ||
+                client.getAddress() == null || client.getAddress().isBlank() ||
                 client.getPhoneNumber() == null || client.getPhoneNumber().isBlank() ||
                 client.getSession() == null || client.getSession().getId() == null)
             return null;

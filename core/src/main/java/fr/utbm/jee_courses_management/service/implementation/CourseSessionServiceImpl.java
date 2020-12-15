@@ -18,6 +18,7 @@ public class CourseSessionServiceImpl implements CourseSessionService {
     }
 
     /** @see fr.utbm.jee_courses_management.service.CourseSessionService#getCourseSession(Integer)  */
+    // TODO Test
     @Override
     public CourseSession getCourseSession(Integer id) {
         return repository.getCourseSessionById(id);
