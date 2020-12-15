@@ -56,6 +56,7 @@
                             <td>No limit</td>
                         </c:otherwise>
                     </c:choose>
+                    <td><input id="btnRegister" type="button" value="Register"/></td>
                 </tr>
             </c:forEach>
         </c:forEach>

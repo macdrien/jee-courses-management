@@ -1,4 +1,10 @@
+<%@ page import="fr.utbm.jee_courses_management.controller.CourseSessionController" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%
+    session.setAttribute("courseSession",
+            new CourseSessionController().getCourseSessionById(Integer.parseInt(request.getParameter("sessionId"))));
+%>
 
 <!DOCTYPE html>
 <html>
@@ -10,7 +16,9 @@
 </head>
 
 <body>
-<h1>Courses Management - Inscription for the course ${sessionScope.courseTitle}</h1>
+<h1>Courses Management - Inscription for the course ${courseSession.course.title}</h1>
+
+<p>Session at ${courseSession.location.city} from ${courseSession.startingDate} to ${courseSession.endingDate}.</p>
 
 <form>
     <table>

@@ -44,3 +44,15 @@ $(document).ready(function () {
         });
     });
 });
+
+$(document).ready(function() {
+    $("#btnRegister").click(function(event) {
+        event.preventDefault();
+
+        // courseSessionId follows the pattern "courseSession-{id}"
+        const courseSessionId = $("#btnRegister").parent().parent().attr("id");
+        const id = courseSessionId.split("-")[1];
+
+        window.location.href = "http://localhost:8080/courses-management/inscription.jsp?sessionId=" + id;
+    })
+})
