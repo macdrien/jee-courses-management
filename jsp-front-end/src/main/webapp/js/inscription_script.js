@@ -24,7 +24,7 @@ function registerClient() {
 
     const email = $("#email").val();
     if (email !== null && email !== "") {
-        clientToRegister.setItem("email", email);
+        clientToRegister["email"] = email;
     }
 
     $.get('RegisterClientServlet', clientToRegister, function(response) {
