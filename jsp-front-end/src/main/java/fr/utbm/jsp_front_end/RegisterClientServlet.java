@@ -21,7 +21,7 @@ public class RegisterClientServlet extends HttpServlet {
         Client toRegister = new Client();
         toRegister.setFirstname(req.getParameter("firstname"));
         toRegister.setLastname(req.getParameter("lastname"));
-        toRegister.setAdress(req.getParameter("address"));
+        toRegister.setAddress(req.getParameter("address"));
         toRegister.setPhoneNumber(req.getParameter("phone"));
         toRegister.setEmail(req.getParameter("email"));
 

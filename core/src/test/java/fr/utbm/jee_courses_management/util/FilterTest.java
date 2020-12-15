@@ -30,7 +30,6 @@ public class FilterTest {
 
     @BeforeAll
     public static void prepareData() {
-        DataSetup.dataSetup();
         courseRepository = new CourseRepository();
         courseSessionRepository = new CourseSessionRepository();
     }

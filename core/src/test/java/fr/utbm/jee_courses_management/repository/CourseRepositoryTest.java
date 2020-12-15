@@ -1,16 +1,10 @@
 package fr.utbm.jee_courses_management.repository;
 
 import fr.utbm.jee_courses_management.entity.Course;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -24,21 +18,11 @@ public class CourseRepositoryTest {
     public void testGetCourses() {
         CourseRepository repository = new CourseRepository();
 
-        final int TEST_COURSE_ID_1 = 1;
-        final String TEST_COURSE_TITLE_1 = "LO54";
-        final int TEST_COURSE_ID_2 = 2;
-        final String TEST_COURSE_TITLE_2 = "AD50";
+        Course testCourse1 = new Course(1, "LO54", null);
+        Course testCourse2 = new Course(2, "AD50", null);
+        Course testCourse3 = new Course(3, "SR50", null);
 
-        Course testCourse1 = new Course();
-        testCourse1.setId(TEST_COURSE_ID_1);
-        testCourse1.setTitle(TEST_COURSE_TITLE_1);
-        repository.save(testCourse1);
-        Course testCourse2 = new Course();
-        testCourse2.setId(TEST_COURSE_ID_2);
-        testCourse2.setTitle(TEST_COURSE_TITLE_2);
-        repository.save(testCourse2);
-
-        List<Course> courses = List.of(testCourse1, testCourse2);
+        List<Course> courses = List.of(testCourse1, testCourse2, testCourse3);
 
         assertEquals(courses, repository.getCourses(false));
     }
