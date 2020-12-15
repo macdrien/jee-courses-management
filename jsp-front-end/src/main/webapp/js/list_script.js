@@ -2,13 +2,13 @@ $(document).ready(function () {
     $('#btnFilter').click(function(event) {
         event.preventDefault();
 
-        const course = $('#courseTitle').val();
+        const course = $('#courseTitle :selected').val();
         const city = $('#city').val();
         const startingDate = $('#startingDate').val();
         const endingDate = $('#endingDate').val();
 
         var toSend = {};
-        if (course != null && course.length !== 0) {
+        if (course !== null && course.length !== 0 && course !== "Course") {
             toSend["course"] = course;
         }
         if (city != null && city.length !== 0) {

@@ -19,8 +19,12 @@
     <script src="https://code.jquery.com/jquery-1.10.2.js"
             type="text/javascript"></script>
     <script src="js/list_script.js" type="text/javascript"></script>
-    <!-- CSS only -->
+
+    <!-- Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
@@ -36,11 +40,18 @@
                 <th>Ending date</th>
             </thead>
             <tr>
-                <td><input id="courseTitle" class="form-control" type="text" placeholder="Course title"/></td>
+                <td>
+                    <select class="custom-select from-control" id="courseTitle">
+                        <option value="">Course</option>
+                        <c:forEach var="course" items="${sessionScope.courses}">
+                            <option value="${course.title}">${course.title}</option>
+                        </c:forEach>
+                    </select>
+                </td>
                 <td><input id="city" class="form-control" type="text" placeholder="City"/></td>
                 <td><input id="startingDate" class="form-control" type="date" placeholder="starting date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/></td>
                 <td><input id="endingDate" class="form-control" type="date" placeholder="ending date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/></td>
-                <td><button id="btnFilter" class="btn btn-secondary">Filter</button></td>
+                <td><button id="btnFilter" class="btn btn-secondary form-control">Filter</button></td>
             </tr>
         </table>
     </form>

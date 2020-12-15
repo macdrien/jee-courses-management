@@ -1,6 +1,6 @@
 body {
     padding: 5px;
-    width: 50%;
+    width: 80%;
     text-align: center;
 }
 
@@ -13,7 +13,21 @@ body {
     margin-bottom: 25px;
 }
 
-thead {
+.filters td {
+    padding: 5px;
+}
+
+.filters .form-control {
+    padding: 3px !important;
+    margin: 0px !important;
+    height: 100% !important;
+}
+
+.custom-select {
+    width: 100%;
+}
+
+.filters thead {
     text-align: left;
 }
 
