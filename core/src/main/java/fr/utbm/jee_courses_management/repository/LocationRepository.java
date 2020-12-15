@@ -1,27 +1,29 @@
 package fr.utbm.jee_courses_management.repository;
 
+import fr.utbm.jee_courses_management.entity.CourseSession;
 import fr.utbm.jee_courses_management.entity.Location;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Class containing methods accessing to the database on the {@link CourseSession} entity. */
 public class LocationRepository {
 
-    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("courses-management");
+    /** {@link EntityManager} to allow requests and operations. */
     EntityManager entityManager = null;
 
     /**
      * Get all locations from the entity {@link Location}
      *
-     * @return A {List} containing all found locations. The returned List can be empty but it cannot be null.
+     * @return A {@link List} containing all found {@link Location}s. The returned {@link List} can be empty but it cannot be null.
      */
+    // TODO Test
     public List<Location> getLocations() {
         if (entityManager == null)
-            entityManager = entityManagerFactory.createEntityManager();
+            entityManager = EntityManagerFactory.getEntityManager();
 
         List<Location> locations = new ArrayList<>();
         for (Object result : entityManager.createQuery("from Location").getResultList())
@@ -36,13 +38,14 @@ public class LocationRepository {
     }
 
     /**
-     * Get one location from the entity {@link Location} from its city.
+     * Get one {@link Location} from the entity {@link Location} from its city.
      *
-     * @return A {Location} or null.
+     * @return A {@link Location} or null.
      */
+    // TODO Test
     public Location getLocation(String city) {
         if (entityManager == null)
-            entityManager = entityManagerFactory.createEntityManager();
+            entityManager = EntityManagerFactory.getEntityManager();
 
         Object result;
 
@@ -64,13 +67,14 @@ public class LocationRepository {
     }
 
     /**
-     * Get one location from the entity {@link Location} from its ID.
+     * Get one {@link Location} from the entity {@link Location} from its ID.
      *
-     * @return A {Location} or null.
+     * @return A {@link Location} or null.
      */
+    // TODO Test
     public Location getLocation(int id) {
         if (entityManager == null)
-            entityManager = entityManagerFactory.createEntityManager();
+            entityManager = EntityManagerFactory.getEntityManager();
 
         Object result;
 
@@ -97,9 +101,10 @@ public class LocationRepository {
      *
      * @param location The {@link Location} to save.
      */
+    // TODO Test
     public void save(Location location) {
         if (entityManager == null)
-            entityManager = entityManagerFactory.createEntityManager();
+            entityManager = EntityManagerFactory.getEntityManager();
         entityManager.getTransaction().begin();
         entityManager.merge(location);
         entityManager.getTransaction().commit();

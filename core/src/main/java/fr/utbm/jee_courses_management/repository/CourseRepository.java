@@ -7,13 +7,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/** Class containing methods accessing to the database on the {@link Course} entity. */
 public class CourseRepository implements Serializable {
 
-    private EntityManager entityManager;
+    /** {@link EntityManager} to allow requests and operations. */
+    private final EntityManager entityManager;
 
+    /** Repository to access to operations on {@link fr.utbm.jee_courses_management.entity.CourseSession} */
     private final CourseSessionRepository courseSessionRepository;
 
+    /** (constructor)
+     * Default constructor to initialize the {@link EntityManager} and the {@link CourseSessionRepository}.
+     */
     public CourseRepository() {
         entityManager = EntityManagerFactory.getEntityManager();
         courseSessionRepository = new CourseSessionRepository();
@@ -22,7 +27,7 @@ public class CourseRepository implements Serializable {
     /**
      * Get all courses from the entity {@link Course}
      *
-     * @return A {List} containing all found courses. The returned List can be empty but it cannot be null.
+     * @return A {@link List} containing all found {@link Course}s. The returned List can be empty but it cannot be null.
      */
     public List<Course> getCourses(boolean loadSessions) {
         List<Course> courses = new ArrayList<>();
@@ -39,16 +44,5 @@ public class CourseRepository implements Serializable {
         });
 
         return courses;
-    }
-
-    /**
-     * Save a new {@link Course} in database.
-     *
-     * @param course The {@link Course} to save.
-     */
-    public void save(Course course) {
-        entityManager.getTransaction().begin();
-        entityManager.merge(course);
-        entityManager.getTransaction().commit();
     }
 }

@@ -1,21 +1,19 @@
 package fr.utbm.jee_courses_management.repository;
 
 import fr.utbm.jee_courses_management.entity.Client;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Class containing methods accessing to the database on the {@link Client} entity.
- */
+/** Class containing methods accessing to the database on the {@link Client} entity. */
 public class ClientRepository implements Serializable {
 
     /** {@link EntityManager} to allow requests and operations. */
     private EntityManager entityManager;
 
+    /** A repository to access to operations on {@link fr.utbm.jee_courses_management.entity.CourseSession} */
     private CourseSessionRepository courseSessionRepository = null;
 
     /** (constructor)

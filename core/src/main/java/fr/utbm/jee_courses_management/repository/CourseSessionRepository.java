@@ -7,16 +7,28 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Class containing methods accessing to the database on the {@link CourseSession} entity. */
 public class CourseSessionRepository implements Serializable {
 
+    /** {@link EntityManager} to allow requests and operations. */
     private final EntityManager entityManager;
 
+    /** Repository to access to operations on {@link fr.utbm.jee_courses_management.entity.Client} */
     private ClientRepository clientRepository = null;
 
+    /** (constructor)
+     * Default constructor to initialize the {@link EntityManager}.
+     */
     public CourseSessionRepository() {
         entityManager = EntityManagerFactory.getEntityManager();
     }
 
+    /**
+     * Get the {@link List} of all {@link CourseSession}.
+     *
+     * @return A {@link List} containing all {@link CourseSession}.
+     */
+    // TODO Test
     public List<CourseSession> getCourseSessions() {
         if (clientRepository == null)
             clientRepository = new ClientRepository();
@@ -31,6 +43,13 @@ public class CourseSessionRepository implements Serializable {
         return sessions;
     }
 
+    /**
+     * Get the {@link List} of all {@link CourseSession} for the {@link fr.utbm.jee_courses_management.entity.Course} identified by the given id.
+     *
+     * @param courseId The id of the {@link fr.utbm.jee_courses_management.entity.Course} for which we want to retrieve all {@link CourseSession}
+     * @return The {@link List} of all {@link CourseSession} for the identified {@link fr.utbm.jee_courses_management.entity.Course}
+     */
+    // TODO Test
     public List<CourseSession> getCourseSessionsByCourseId(Integer courseId) {
         if (clientRepository == null)
             clientRepository = new ClientRepository();
