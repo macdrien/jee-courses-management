@@ -56,7 +56,7 @@
                             <td>No limit</td>
                         </c:otherwise>
                     </c:choose>
-                    <td><input id="btnRegister" type="button" value="Register"/></td>
+                    <td><input id="btnRegister-${courseSession.id}" type="button" value="Register" onclick="register(${courseSession.id})"/></td>
                 </tr>
             </c:forEach>
         </c:forEach>

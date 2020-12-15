@@ -38,6 +38,7 @@ $(document).ready(function () {
                         '<td>' + starts + '</td>' +
                         '<td>' + finish + '</td>' +
                         '<td>' + (session.maxStudents != null ? session.maxStudents : 'No limit') + '</td>' +
+                        '<td><input id="btnRegister-' + session.id + '" type="button" value="Register" onClick="register(' + session.id + ')"/></td>' +
                     '</tr>');
                 });
             });
@@ -45,14 +46,6 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function() {
-    $("#btnRegister").click(function(event) {
-        event.preventDefault();
-
-        // courseSessionId follows the pattern "courseSession-{id}"
-        const courseSessionId = $("#btnRegister").parent().parent().attr("id");
-        const id = courseSessionId.split("-")[1];
-
-        window.location.href = "http://localhost:8080/courses-management/inscription.jsp?sessionId=" + id;
-    })
-})
+function register(courseSessionId) {
+    window.location.href = "http://localhost:8080/courses-management/inscription.jsp?sessionId=" + courseSessionId;
+}
