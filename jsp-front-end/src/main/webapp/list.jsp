@@ -4,12 +4,26 @@
 <%@ page import="fr.utbm.jee_courses_management.controller.CourseController" %>
 <%@ page import="fr.utbm.jee_courses_management.util.Filter"%>
 <%@ page import="java.time.LocalDate" %>
+<%@ page import="java.util.List" %>
+<%@ page import="fr.utbm.jee_courses_management.entity.Location" %>
+<%@ page import="fr.utbm.jee_courses_management.entity.Course" %>
+<%@ page import="java.util.ArrayList" %>
 
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%
     CourseController controller = new CourseController();
-    session.setAttribute("courses", controller.getCourses(new Filter(null, LocalDate.now(), null, null)));
+    List<Course> courses = controller.getCourses(new Filter(null, LocalDate.now(), null, null));
+    session.setAttribute("courses", courses);
+
+    List<String> locations = new ArrayList<>();
+    courses.forEach(course ->
+        course.getSessions().forEach(courseSession -> {
+            if (!locations.contains(courseSession.getLocation().getCity()))
+                locations.add(courseSession.getLocation().getCity());
+        })
+    );
+    session.setAttribute("locations", locations);
 %>
 
 <!DOCTYPE html>
@@ -48,7 +62,15 @@
                         </c:forEach>
                     </select>
                 </td>
-                <td><input id="city" class="form-control" type="text" placeholder="City"/></td>
+                <td>
+                    <select class="custom-select from-control" id="city">
+                        <option value="">City</option>
+                        <c:forEach var="location" items="${sessionScope.locations}">
+                            <option value="${location}">${location}</option>
+                        </c:forEach>
+                    </select>
+                    <!--<input id="city" class="form-control" type="text" placeholder="City"/>-->
+                </td>
                 <td><input id="startingDate" class="form-control" type="date" placeholder="starting date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/></td>
                 <td><input id="endingDate" class="form-control" type="date" placeholder="ending date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/></td>
                 <td><button id="btnFilter" class="btn btn-secondary form-control">Filter</button></td>
