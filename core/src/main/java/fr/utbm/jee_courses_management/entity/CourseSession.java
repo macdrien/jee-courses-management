@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "COURSE_SESSIONS")
@@ -36,4 +36,10 @@ public class CourseSession {
     @JoinColumn(name = "id_location")
     @ManyToOne(fetch = FetchType.EAGER)
     private Location location;
+
+    @Transient
+    private List<Client> clients;
+
+    @Transient
+    private Integer clientNumber;
 }

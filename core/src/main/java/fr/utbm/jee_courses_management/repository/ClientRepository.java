@@ -1,9 +1,12 @@
 package fr.utbm.jee_courses_management.repository;
 
 import fr.utbm.jee_courses_management.entity.Client;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.persistence.EntityManager;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class containing methods accessing to the database on the {@link Client} entity.
@@ -12,6 +15,8 @@ public class ClientRepository implements Serializable {
 
     /** {@link EntityManager} to allow requests and operations. */
     private EntityManager entityManager;
+
+    private CourseSessionRepository courseSessionRepository = null;
 
     /** (constructor)
      * Default constructor to initialize the {@link EntityManager}.
@@ -41,6 +46,58 @@ public class ClientRepository implements Serializable {
         }
 
         return result;
+    }
+
+    /**
+     * Get a {@link List} of {@link Client} who have been registered to the given {@link fr.utbm.jee_courses_management.entity.CourseSession}.
+     * @param sessionId The id of the {@link fr.utbm.jee_courses_management.entity.CourseSession}.
+     * @return
+     * <ul>
+     *     <li>A {@link List} of registered {@link Client}.</li>
+     *     <li>An empty {@link List} if there is no registered {@link Client}.</li>
+     *     <li>Will return null if the {@link fr.utbm.jee_courses_management.entity.CourseSession} does not exist.</li>
+     * </ul>
+     */
+    // TODO Test
+    public List<Client> getClientsBySessionId(Integer sessionId) {
+        if (courseSessionRepository == null)
+            courseSessionRepository = new CourseSessionRepository();
+
+        if (!courseSessionRepository.doesCourseSessionExists(sessionId))
+            return null;
+
+        List<Client> clients = List.of();
+        try {
+            List<Client> tmp = new ArrayList<>();
+            entityManager.createQuery(
+                    "from Client client where client.session.id = :sessionId")
+                    .setParameter("sessionId", sessionId)
+                    .getResultList().forEach(result -> {
+                        if (result instanceof Client)
+                            tmp.add((Client) result);
+            });
+            clients = tmp;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        return clients;
+    }
+
+    /**
+     * Get the number of {@link Client} registered to the given {@link fr.utbm.jee_courses_management.entity.CourseSession}.
+     *
+     * @param sessionId The id of the {@link fr.utbm.jee_courses_management.entity.CourseSession}.
+     * @return
+     * <ul>
+     *     <li>The number of registered {@link Client}.</li>
+     *     <li>Will return null if the {@link fr.utbm.jee_courses_management.entity.CourseSession} does not exist.</li>
+     * </ul>
+     */
+    // TODO Test
+    public Integer getNumberOfRegisteredClientsToTheCourseSession(Integer sessionId) {
+        List<Client> clients = getClientsBySessionId(sessionId);
+        return clients != null ? clients.size() : null;
     }
 
     /**
