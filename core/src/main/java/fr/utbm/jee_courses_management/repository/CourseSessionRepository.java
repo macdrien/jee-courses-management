@@ -70,6 +70,7 @@ public class CourseSessionRepository implements Serializable {
                          * We know the course so we don't need it. That stop the loop between the Course and CourseSession.
                          */
                         session.setCourse(null);
+                        session.setClientNumber(clientRepository.getNumberOfRegisteredClientsToTheCourseSession(session.getId()));
 
                         sessions.add(session);
                     }
