@@ -37,7 +37,10 @@ $(document).ready(function () {
                         '<td>' + session.location.city + '</td>' +
                         '<td>' + starts + '</td>' +
                         '<td>' + finish + '</td>' +
-                        '<td>' + (session.maxStudents != null ? session.maxStudents : 'No limit') + '</td>' +
+                        (session.maxStudents != null ?
+                            '<td>' + session.maxStudents + '</td><td>' + (parseInt(session.clientNumber * 100 / session.maxStudents)) + '%</td>' :
+                            '<td>No limit</td><td></td>'
+                        ) +
                         '<td><input id="btnRegister-' + session.id + '" type="button" value="Register" onClick="register(' + session.id + ')"/></td>' +
                     '</tr>');
                 });

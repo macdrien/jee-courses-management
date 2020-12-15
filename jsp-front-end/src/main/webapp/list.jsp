@@ -1,4 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ page import="fr.utbm.jee_courses_management.controller.CourseController" %>
 <%@ page import="fr.utbm.jee_courses_management.util.Filter"%>
@@ -39,6 +40,7 @@
         <td>Starting date</td>
         <td>Ending date</td>
         <td>Students limitation</td>
+        <td>Occupancy rate</td>
     </thead>
     <tbody id="coursesList">
         <c:forEach var="course" items="${sessionScope.courses}">
@@ -51,9 +53,13 @@
                     <c:choose>
                         <c:when test="${courseSession.maxStudents != null && courseSession.maxStudents > 0}">
                             <td>${courseSession.maxStudents}</td>
+                            <fmt:parseNumber var="rate" integerOnly="true" type="number"
+                                             value="${courseSession.clientNumber * 100 / courseSession.maxStudents}" />
+                            <td>${rate}%</td>
                         </c:when>
                         <c:otherwise>
                             <td>No limit</td>
+                            <td></td>
                         </c:otherwise>
                     </c:choose>
                     <td><input id="btnRegister-${courseSession.id}" type="button" value="Register" onclick="register(${courseSession.id})"/></td>
