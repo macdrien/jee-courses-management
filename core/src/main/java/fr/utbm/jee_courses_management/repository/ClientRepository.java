@@ -1,6 +1,8 @@
 package fr.utbm.jee_courses_management.repository;
 
 import fr.utbm.jee_courses_management.entity.Client;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import javax.persistence.EntityManager;
 import java.io.Serializable;
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Class containing methods accessing to the database on the {@link Client} entity. */
+@AllArgsConstructor
 public class ClientRepository implements Serializable {
 
     /** {@link EntityManager} to allow requests and operations. */
@@ -30,7 +33,6 @@ public class ClientRepository implements Serializable {
      * @return The found {@link Client}.<br/>
      *          Null if the {@link Client} does not exist or if an error occurred.
      */
-    // TODO Test
     public Client getClientById(Integer id) {
         Client result = null;
         try {
@@ -56,7 +58,6 @@ public class ClientRepository implements Serializable {
      *     <li>Will return null if the {@link fr.utbm.jee_courses_management.entity.CourseSession} does not exist.</li>
      * </ul>
      */
-    // TODO Test
     public List<Client> getClientsBySessionId(Integer sessionId) {
         if (courseSessionRepository == null)
             courseSessionRepository = new CourseSessionRepository();
@@ -92,7 +93,6 @@ public class ClientRepository implements Serializable {
      *     <li>Will return null if the {@link fr.utbm.jee_courses_management.entity.CourseSession} does not exist.</li>
      * </ul>
      */
-    // TODO Test
     public Integer getNumberOfRegisteredClientsToTheCourseSession(Integer sessionId) {
         List<Client> clients = getClientsBySessionId(sessionId);
         return clients != null ? clients.size() : null;
@@ -108,7 +108,6 @@ public class ClientRepository implements Serializable {
      * @return The found {@link Client}.<br/>
      *          Null if the {@link Client} does not exist or if an error occurred.
      */
-    // TODO Test
     public Client getClientByFirstnameAndLastnameAndSessionId(String firstname, String lastname, Integer sessionId) {
         Client result = null;
         try {
@@ -135,7 +134,6 @@ public class ClientRepository implements Serializable {
      * @return The registered {@link Client}.<br/>
      *          Null if the {@link Client} already exists or if an error occurred.
      */
-    // TODO Test
     public Client register(Client client) {
         if (client.getId() != null)
             if (getClientById(client.getId()) != null)
