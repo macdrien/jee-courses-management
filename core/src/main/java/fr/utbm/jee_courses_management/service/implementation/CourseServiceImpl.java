@@ -6,10 +6,12 @@ import fr.utbm.jee_courses_management.repository.CourseRepository;
 import fr.utbm.jee_courses_management.repository.CourseSessionRepository;
 import fr.utbm.jee_courses_management.service.CourseService;
 import fr.utbm.jee_courses_management.util.Filter;
+import lombok.AllArgsConstructor;
 
 import java.util.List;
 
 /** An implementation of the service {@link Course}. */
+@AllArgsConstructor
 public class CourseServiceImpl implements CourseService {
 
     /** A repository a access to the {@link Client} entity. */
@@ -28,7 +30,6 @@ public class CourseServiceImpl implements CourseService {
     }
 
     /** @see fr.utbm.jee_courses_management.service.CourseService#getCourses(Filter) */
-    // TODO Test
     @Override
     public List<Course> getCourses(Filter filter) {
         List<Course> courses = repository.getCourses(true);
