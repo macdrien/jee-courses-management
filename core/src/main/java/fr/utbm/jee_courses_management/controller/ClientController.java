@@ -3,12 +3,14 @@ package fr.utbm.jee_courses_management.controller;
 import fr.utbm.jee_courses_management.entity.Client;
 import fr.utbm.jee_courses_management.service.ClientService;
 import fr.utbm.jee_courses_management.service.implementation.ClientServiceImpl;
+import lombok.AllArgsConstructor;
 
 import java.io.Serializable;
 
 /**
  * Controller for verifications and operations on or about {@link Client}
  */
+@AllArgsConstructor
 public class ClientController implements Serializable {
 
     /** A service which do operations. */
@@ -28,7 +30,6 @@ public class ClientController implements Serializable {
      * @param client The {@link Client} to register.
      * @return The registered {@link Client}. Will return null if the registration fails.
      */
-    // TODO Test
     public Client registerClient(Client client) {
         return service.registerClient(client);
     }
