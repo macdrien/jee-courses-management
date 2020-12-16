@@ -40,7 +40,6 @@ public class RegisterClientServlet extends HttpServlet {
 
         if (client != null) {
             // Registration complete. Return the client as a JSON
-            resp.setStatus(201);
             resp.setContentType("application/json");
             resp.getWriter().println(new ObjectMapper().writeValueAsString(client));
         }
