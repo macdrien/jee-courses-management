@@ -2,13 +2,12 @@ package fr.utbm.jee_courses_management.util;
 
 import fr.utbm.jee_courses_management.entity.Course;
 import fr.utbm.jee_courses_management.entity.CourseSession;
-import fr.utbm.jee_courses_management.repository.CourseRepository;
-import fr.utbm.jee_courses_management.repository.CourseSessionRepository;
+import fr.utbm.jee_courses_management.entity.Location;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
-import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
@@ -21,17 +20,29 @@ import java.util.stream.Collectors;
  * @author macdrien
  */
 @RunWith(JUnitPlatform.class)
-@SelectPackages("fr.utbm.jee_courses_management")
 public class FilterTest {
 
-    private static CourseRepository courseRepository;
+    private static List<Course> courses;
 
-    private static CourseSessionRepository courseSessionRepository;
+    private static List<CourseSession> sessions;
 
+    /** Prepare a list of courses for tests */
     @BeforeAll
     public static void prepareData() {
-        courseRepository = new CourseRepository();
-        courseSessionRepository = new CourseSessionRepository();
+        Location location1 = new Location(1, "Belfort"),
+                location2 = new Location(2, "Mulhouse"),
+                location3 = new Location(3, "Montbéliard");
+
+        CourseSession session1 = new CourseSession(1, LocalDate.MIN.plusDays(1), LocalDate.MAX.minusDays(1), 50, null, location1, null, 5),
+            session2 = new CourseSession(2, LocalDate.MIN.plusDays(1), LocalDate.MAX.minusDays(1), 50, null, location2, null, 5),
+            session3 = new CourseSession(3, LocalDate.MIN.plusDays(1), LocalDate.MAX.minusDays(1), 50, null, location3, null, 5);
+
+        Course course1 = new Course(1, "LO54", List.of(session1)),
+                course2 = new Course(2, "AD50", List.of(session2)),
+                course3 = new Course(3, "SR50", List.of(session3));
+
+        courses = List.of(course1, course2, course3);
+        sessions = List.of(session1, session2, session3);
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
@@ -49,7 +60,6 @@ public class FilterTest {
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
     @Test
     public void testFilterCoursesAndSessionsWithNullFilter() {
-        List<Course> courses = courseRepository.getCourses(false);
         assertThrows(NullPointerException.class, () -> {Filter.filterCoursesAndSessions(courses, null); });
     }
 
@@ -57,9 +67,7 @@ public class FilterTest {
     @Test
     public void testFilterCoursesAndSessionsWithoutFilteringOptions() {
         Filter filter = new Filter();
-        List<Course> courses = courseRepository.getCourses(true);
-
-        assertEquals(courses.subList(0, courses.size() - 1), Filter.filterCoursesAndSessions(courses, filter));
+        assertEquals(courses, Filter.filterCoursesAndSessions(courses, filter));
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
@@ -67,9 +75,7 @@ public class FilterTest {
     public void testFilterCoursesAndSessionsWithBlankKeywordOptionAndNoOtherOptions() {
         Filter filter = new Filter();
         filter.setKeyword("");
-        List<Course> courses = courseRepository.getCourses(true);
-
-        assertEquals(courses.subList(0, courses.size() - 1), Filter.filterCoursesAndSessions(courses, filter));
+        assertEquals(courses, Filter.filterCoursesAndSessions(courses, filter));
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
@@ -78,9 +84,7 @@ public class FilterTest {
         Filter filter = new Filter();
         // In the test data, "5" is in all course title
         filter.setKeyword("5");
-        List<Course> courses = courseRepository.getCourses(true);
-
-        assertEquals(courses.subList(0, courses.size() - 1), Filter.filterCoursesAndSessions(courses, filter));
+        assertEquals(courses, Filter.filterCoursesAndSessions(courses, filter));
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
@@ -88,8 +92,6 @@ public class FilterTest {
     public void testFilterCoursesAndSessionsWithKeywordTakingNoCoursesAndNoOtherOptions() {
         Filter filter = new Filter();
         filter.setKeyword("Not contained in any course");
-        List<Course> courses = courseRepository.getCourses(true);
-
         assertEquals(List.of(), Filter.filterCoursesAndSessions(courses, filter));
     }
 
@@ -104,9 +106,7 @@ public class FilterTest {
          * The keyword "50" will exclude "LO54" and keep the two others.
          */
         filter.setKeyword("50");
-        List<Course> courses = courseRepository.getCourses(true);
-
-        assertEquals(List.of(courses.get(1)), Filter.filterCoursesAndSessions(courses, filter));
+        assertEquals(courses.subList(1, courses.size()), Filter.filterCoursesAndSessions(courses, filter));
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
@@ -114,9 +114,7 @@ public class FilterTest {
     public void testFilterCoursesAndSessionsWithNonNullStartingDateTakingAllCoursesAndNoOtherOptions() {
         Filter filter = new Filter();
         filter.setStartingDate(LocalDate.MIN);
-        List<Course> courses = courseRepository.getCourses(true);
-
-        assertEquals(courses.subList(0, courses.size() - 1), Filter.filterCoursesAndSessions(courses, filter));
+        assertEquals(courses, Filter.filterCoursesAndSessions(courses, filter));
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
@@ -125,8 +123,6 @@ public class FilterTest {
     public void testFilterCoursesAndSessionsWithNonNullStartingDateTakingNoCoursesAndNoOtherOptions() {
         Filter filter = new Filter();
         filter.setStartingDate(LocalDate.MAX);
-        List<Course> courses = courseRepository.getCourses(true);
-
         assertEquals(List.of(), Filter.filterCoursesAndSessions(courses, filter));
     }
 
@@ -137,8 +133,6 @@ public class FilterTest {
         Filter filter = new Filter();
         // That will exclude which begins in the 2020's first semester or before
         filter.setStartingDate(startingDate);
-
-       List<Course> courses = courseRepository.getCourses(true);
 
         for (Course course: Filter.filterCoursesAndSessions(courses, filter))
             course.getSessions().forEach(session -> {
@@ -152,10 +146,9 @@ public class FilterTest {
     public void testFilterCoursesAndSessionsWithNonNullEndingDateTakingAllCoursesAndNoOtherOptions() {
         Filter filter = new Filter();
         filter.setEndingDate(LocalDate.MAX);
-        List<Course> courses = courseRepository.getCourses(true);
 
         // Do not expect the last course because it has no sessions -> It will be filtered
-        assertEquals(courses.subList(0, courses.size() - 1), Filter.filterCoursesAndSessions(courses, filter));
+        assertEquals(courses, Filter.filterCoursesAndSessions(courses, filter));
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
@@ -164,7 +157,6 @@ public class FilterTest {
     public void testFilterCoursesAndSessionsWithNonNullEndingDateTakingNoCoursesAndNoOtherOptions() {
         Filter filter = new Filter();
         filter.setEndingDate(LocalDate.MIN);
-        List<Course> courses = courseRepository.getCourses(true);
 
         assertEquals(List.of(), Filter.filterCoursesAndSessions(courses, filter));
     }
@@ -176,8 +168,6 @@ public class FilterTest {
         Filter filter = new Filter();
         // That will exclude which begins in the 2020's first semester or before
         filter.setEndingDate(endingDate);
-
-        List<Course> courses = courseRepository.getCourses(true);
 
         for (Course course: Filter.filterCoursesAndSessions(courses, filter))
             course.getSessions().forEach(session -> {
@@ -191,9 +181,8 @@ public class FilterTest {
     public void testFilterCoursesAndSessionsWithBlankCityAndNoOtherOption() {
         Filter filter = new Filter();
         filter.setCity("");
-        List<Course> courses = courseRepository.getCourses(true);
 
-        assertEquals(courses.subList(0, courses.size() - 1), Filter.filterCoursesAndSessions(courses, filter));
+        assertEquals(courses, Filter.filterCoursesAndSessions(courses, filter));
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
@@ -203,7 +192,6 @@ public class FilterTest {
         Filter filter = new Filter();
         // Available cities are "Mulhouse", "Belfort" and "Montbeliard"
         filter.setCity("z");
-        List<Course> courses = courseRepository.getCourses(true);
 
         assertEquals(List.of(), Filter.filterCoursesAndSessions(courses, filter));
     }
@@ -211,14 +199,13 @@ public class FilterTest {
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
     @Test
     public void testFilterCoursesAndSessionsWithCityTakingSomeSessionsAndNoOtherOption() {
-        final String SEARCHED_NAME = "Montbeliard";
+        final String SEARCHED_NAME = "Montbéliard";
         Filter filter = new Filter();
-        // Available cities are "Mulhouse", "Belfort" and "Montbeliard"
+        // Available cities are "Mulhouse", "Belfort" and "Montbéliard"
         filter.setCity(SEARCHED_NAME);
-        List<Course> courses = courseRepository.getCourses(true);
 
-        Course expectedCourse = courses.get(1);
-        expectedCourse.setSessions(List.of(expectedCourse.getSessions().get(1)));
+        // The course which has a session in Montébliard
+        Course expectedCourse = courses.get(2);
 
         assertEquals(List.of(expectedCourse), Filter.filterCoursesAndSessions(courses, filter));
     }
@@ -230,7 +217,6 @@ public class FilterTest {
                 ENDING_OF_2020 = LocalDate.of(2020, 12, 31);
         Filter filter = new Filter(null, BEGINNING_OF_2020,
                                     ENDING_OF_2020, null);
-        List<Course> courses = courseRepository.getCourses(true);
 
         Filter.filterCoursesAndSessions(courses, filter).forEach(course -> {
             course.getSessions().forEach(session -> {
@@ -249,8 +235,6 @@ public class FilterTest {
         // Get all sessions but pass into each filters
         final String KEYWORD = "5";
 
-        List<Course> courses = courseRepository.getCourses(false);
-
         courses.forEach(course -> assertTrue(Filter.filterCourseTitle(course, KEYWORD)));
     }
 
@@ -260,15 +244,12 @@ public class FilterTest {
         // Get all sessions but pass into each filters
         final String KEYWORD = "Not contained";
 
-        List<Course> courses = courseRepository.getCourses(false);
-
         courses.forEach(course -> assertFalse(Filter.filterCourseTitle(course, KEYWORD)));
     }
 
     /** Test method for {@link Filter#filterSessionBeginAfter(CourseSession, LocalDate)} */
     @Test
     public void testFilterSessionBeginAfterWithOnlyAfterBeginningCondition() {
-        List<CourseSession> sessions = courseSessionRepository.getCourseSessions();
 
         sessions.forEach(session -> assertTrue(Filter.filterSessionBeginAfter(session, LocalDate.MIN)));
     }
@@ -276,49 +257,37 @@ public class FilterTest {
     /** Test method for {@link Filter#filterSessionBeginAfter(CourseSession, LocalDate)} */
     @Test
     public void testFilterSessionBeginAfterWithOnlyOnDateBeginningCondition() {
-        List<CourseSession> sessions = courseSessionRepository.getCourseSessions();
-
         sessions.forEach(session -> assertTrue(Filter.filterSessionBeginAfter(session, session.getStartingDate())));
     }
 
     /** Test method for {@link Filter#filterSessionBeginAfter(CourseSession, LocalDate)} */
     @Test
     public void testFilterSessionBeginAfterWithOnlyErrors() {
-        List<CourseSession> sessions = courseSessionRepository.getCourseSessions();
-
         sessions.forEach(session -> assertFalse(Filter.filterSessionBeginAfter(session, LocalDate.MAX)));
     }
 
     /** Test method for {@link Filter#filterSessionFinishBefore(CourseSession, LocalDate)} */
     @Test
-    public void testFilterSessionFinishBeforeWithOnlyBeforeEndingCondition() {;
-        List<CourseSession> sessions = courseSessionRepository.getCourseSessions();
-
+    public void testFilterSessionFinishBeforeWithOnlyBeforeEndingCondition() {
         sessions.forEach(session -> assertTrue(Filter.filterSessionFinishBefore(session, LocalDate.MAX)));
     }
 
     /** Test method for {@link Filter#filterSessionFinishBefore(CourseSession, LocalDate)} */
     @Test
     public void testFilterSessionFinishBeforeWithOnlyOnDateEndingCondition() {
-        CourseSessionRepository repository = new CourseSessionRepository();
-        List<CourseSession> sessions = repository.getCourseSessions();
-
         sessions.forEach(session -> assertTrue(Filter.filterSessionFinishBefore(session, session.getEndingDate())));
     }
 
     /** Test method for {@link Filter#filterSessionFinishBefore(CourseSession, LocalDate)} */
     @Test
     public void testFilterSessionFinishBeforeWithOnlyToLateEndingCondition() {
-        List<CourseSession> sessions = courseSessionRepository.getCourseSessions();
-
         sessions.forEach(session -> assertFalse(Filter.filterSessionFinishBefore(session, LocalDate.MIN)));
     }
 
     /** Test method for {@link Filter#filterSessionInCity(CourseSession, String)} */
     @Test
     public void testFilterSessionInCity() {
-        List<CourseSession> sessions = courseSessionRepository.getCourseSessions();
-        List<CourseSession> expected = sessions.subList(0, 2);
+        List<CourseSession> expected = List.of(sessions.get(0));
 
         sessions = sessions.stream()
                 .filter(session -> Filter.filterSessionInCity(session, "Belfort"))
@@ -330,8 +299,6 @@ public class FilterTest {
     /** Test method for {@link Filter#filterSessionInCity(CourseSession, String)} */
     @Test
     public void testFilterSessionInCityWithoutCorresponding() {
-        List<CourseSession> sessions = courseSessionRepository.getCourseSessions();
-
         sessions = sessions.stream()
                 .filter(session -> Filter.filterSessionInCity(session, "Non existing city"))
                 .collect(Collectors.toList());
