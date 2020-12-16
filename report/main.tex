@@ -1,0 +1,298 @@
+\documentclass[12pt]{article}		% Précise le type de document, et la taille de la police de caractère
+\renewcommand{\baselinestretch}{1,5}
+\usepackage{rotating}
+\usepackage{natbib} % Pour pouvoir utiliser une bibliographie externe
+\usepackage[french]{babel}	% Pour préciser la langue du document
+\usepackage[utf8]{inputenc}	% Précise comment le texte est saisi : cela permet de tapper directement les accents
+\usepackage[T1]{fontenc}	% Précise la façon dont le document actuel est encodé
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage[margin=2.5cm]{geometry} % Précise les marges du document
+\title{Raport LO54 - JUnit5 Jupiter}% N'affecte pas la page titre, mais défini le nom de votre projet
+\author{Adrien Bouyssou - Vincent Galinier} % N'affecte pas la page titre, mais défini le nom de l'auteur(e) du projet
+
+%Bibliographie
+%----------------------------------------------------------------
+\bibliographystyle{apalike-fr.bst} % Pour changer le style de bibliographie
+\addto{\captionsfrench}{\renewcommand{\refname}{Bibliographie}} % Comme le langage défini est le français, "Références" aurait été le titre par défaut pour la bibliographie
+\usepackage[numbib]{tocbibind} % Ajoute un numéro à bibliographie à la table des manière avec numéro 
+% \usepackage[nottoc]{tocbibind}  Ajoute la bibliographie dans la table des matières sans numéro
+
+%----------------------------------------------------------------
+
+%Sections
+%----------------------------------------------------------------
+%\usepackage{newclude} % Pour pouvoir utiliser l'étoile après \inculde pour éviter les sauts de page. Ce package a des problême de compatibilité avec la package natbib
+%\renewcommand\thesection{} % Pour éviter la numérotation des sections
+%----------------------------------------------------------------
+
+%Informations destinées à la page de présentation
+%----------------------------------------------------------------
+\newcommand{\titre}{Rapport LO54 - JUnit5 Jupiter}
+\newcommand{\auteurs}{Adrien Bouyssou - Vincent Galinier}
+\newcommand{\matricules}{abouysso - vgalinie}
+\newcommand{\destinataire}{Olivier Richard}
+\newcommand{\cours}{LO54}
+%----------------------------------------------------------------
+
+%Autres packages et commandes utiles
+%----------------------------------------------------------------
+\usepackage{amsmath,amsthm,amssymb,amsfonts}	% Pour pouvoir inclure certains symboles et environnements mathématiques
+\usepackage{enumerate} % Pour mieux gérer la commande enumerate dans les sections
+\usepackage{graphicx}	% Pour inclure des images
+\usepackage{color}	% Pour inclure du texte en couleur
+\usepackage{units}	% Pour pouvoir tapper les unités correctement
+\usepackage{pgf,tikz}	% Utilisation du module tikz, qui permet de tracer des belles images
+\usetikzlibrary{arrows} % Quand on exporte une image GeoGebra, on a besoin de préciser cela
+\usepackage{hyperref}	% Pour include des liens dans le document
+\newcommand{\N}{\mathbb{N}}	% Commande personnelle, plus rapide pour tapper les ensembles
+\newcommand{\Z}{\mathbb{Z}}	% Commande personnelle, plus rapide pour tapper les ensembles
+\newcommand{\R}{\mathbb{R}}	% Commande personnelle, plus rapide pour tapper les ensembles
+\usepackage{cprotect}	% Pour pouvoir personaliser la légende des figures
+\usepackage{pdfpages} 
+%----------------------------------------------------------------
+
+\begin{document}
+\input{pagetitre} % Inclut le code contenu dans un fichier comme s'il était entré ici
+\tableofcontents 
+% Le package newclude mis en commentaire permet d'introduire une * pour éviter le saut de page entre les section
+\pagebreak
+%% Rappoer
+\part{JUnit5 Jupiter}
+
+JUnit est le framework java permettant de faire des tests unitaires sur une application back-end. JUnit5 Jupiter est la dernière version en date de ce framework. Dans ce document nous allons voir comment l'utiliser dans un projet JEE Maven.
+
+\vspace{0.5cm}
+
+\textit{La documentation écrite ici et un projet d'exemple sont disponibles à l'adresse \href{www.github.com/macdrien/junit-jupiter-example.git}{www.github.com/macdrien/junit-jupiter-example.git}}
+
+\section{Requirement}
+
+Pour fonctionner, JUnit5 a besion d'une version Java8+.
+
+\section{Dependencies}
+
+JUnit est découpé en plusieurs artifacts qui ont chacun leurs usages. Dans tous les cas, le scope des dépendences peut être restreint aux tests. JUnit étant un framework de tests unitaires, il est inutile de le concerver dans les versions de production. Voici donc les trois artifacts proposés par JUnit Jupiter:
+
+\subsection{JUnit Jupiter Platform}
+
+JUnit Jupiter Platform est le module qui permet de lancer les tests unitaires. Il se charge depuis l'artifact junit-jupiter-engine. \\ Cet artifact fourni également l'API TestEngine. Cette API permet de créer ses propres frameworks de test. Ces frameworks pourront ensuite être utilisé grâce à l'artifact junit-jupiter-engine.
+
+\lstset{language=XML, numbers=left}
+\begin{lstlisting}[basicstyle=\small]
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter-engine</artifactId>
+    <version>${junit.jupiter.engine.version}</version>
+    <scope>test</scope>
+</dependency>
+\end{lstlisting}
+
+\subsection{JUnit Jupiter API}
+
+JUnit Jupiter API est la dépendence qui apporte les outils de test (méthodes, annotations, ...).
+
+\lstset{language=XML, numbers=left}
+\begin{lstlisting}[basicstyle=\small]
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter-api</artifactId>
+    <version>${junit.jupiter.api.version}</version>
+    <scope>test</scope>
+</dependency>
+\end{lstlisting}
+
+\subsection{JUnit Jupiter Vintage}
+
+Cette dépendance n'a pas été utilisée dans le projet d'entraînement. Cependant elle peut s'avérer très utile. \\ JUnit Jupiter Vintage est une dépendance de JUnit5 qui embarque les fonctionnalités des versions 3 et 4 de JUnit. Cette dépendance n'est donc pas souvent utile. Mais elle peut l'être dans le cadre d'une montée de version de JUnit dans un projet déjà testé.
+
+\lstset{language=XML, numbers=left}
+\begin{lstlisting}[basicstyle=\small]
+<dependency>
+    <groupId>org.junit.vintage</groupId>
+    <artifactId>junit-vintage-engine</artifactId>
+    <version>${junit.vintage.engine.version}</version>
+    <scope>test</scope>
+</dependency>
+\end{lstlisting}
+
+\subsection{Build plugin}
+
+Surfire ne prend pas JUnit5 en charge par défaut. Pour que maven puisse lancer les tests JUnits, il faut donc ajouter un plugin au build maven. \\ Une fois ajouté, la commande 'mvn test' fera tourner les tests JUnit5 Jupiter.
+
+\lstset{language=XML, numbers=left}
+\begin{lstlisting}[basicstyle=\small]
+<build>
+    <plugins>
+    	<!-- ... -->
+        <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${maven.surfire.plugin.version}</version>
+            <dependencies>
+                <dependency>
+                    <groupId>org.junit.platform</groupId>
+                    <artifactId>junit-platform-surefire-provider</artifactId>
+                    <version>${junit.platform.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter-engine</artifactId>
+                    <version>${junit.jupiter.version}</version>
+                </dependency>
+            </dependencies>
+        </plugin>
+    	<!-- ... -->
+    </plugins>
+</build>
+\end{lstlisting}
+
+\section{Méthodes d'assertions}
+
+Les méthodes d'assertions sont, avec l'annotation Test, les principaux outils utilisés pour les tests. C'est pour cela que nous verrons ces méthodes en premier. Les méthodes d'assertions sont un ensemble de fonctions qui effectueront un test simple et retourneront un état validé ou échoué. \\ Si la méthode d'assertion échoue, alors elle va stopper la fonction de test en la marquant comme échouée. \\ Si elle réussie, la fonction de test va continuer. Si le processus de test arrive à la fin de la fonction de test sans lever d'erreur ou faire échouer une assertion, alors le test sera marqué comme réussi.
+
+Il y a une grand nombre de méthodes d'assertions, aussi, nous ne verront que les plus communes. Toutes ces méthodes sont trouvable dans la clases org.junit.jupiter.api.Assertions. Pour des raisons pratiques, elles seront importées de manière statique via l'import suivant:
+
+\lstset{language=Java, numbers=left}
+\begin{lstlisting}[basicstyle=\small]
+import static org.junit.jupiter.api.Assertions.*;
+\end{lstlisting}
+
+La plus part des méthodes qui vont être présentées peuvent prendre un dernier argument. Ce dernier contiendra un message à afficher en cas d'erreur du test. En l'absence de cet argument, un message par défaut sera généré.
+
+Les méthodes que nous utilisons le plus souvent sont les suivantes:
+
+\subsection{assertEquals}
+
+Cette méthode demande deux arguments. Le premier est le résultat attendu, le second est la variable a tester.
+
+\lstset{language=Java, numbers=left}
+\begin{lstlisting}[basicstyle=\small]
+assertEquals(expect, origin.add(second));
+\end{lstlisting}
+
+Cette méthode va appeler la méthode equals du premier argument en y donnant le second argument. Si l'objet donné n'implémente pas la méthode equals, alors la méthode utilisera l'opérateur == pour faire son test. Le test sera alors fait sur les références des deux objets.
+
+\subsection{assertTrue et assertFalse}
+
+Ces deux méthodes n'ont besoin que d'un seul argument. Cet argument est une condition ou une valeur booléenne à tester. L'assertion réussira si la condition booléenne est vraie pour la première méthode, ou fausse  pour la seconde méthode.
+
+\lstset{language=Java, numbers=left}
+\begin{lstlisting}[basicstyle=\small]
+assertTrue(5 + 3 == 8);  // Success
+assertFalse(5 + 5 == 8); // Success
+assertTrue(5 + 5 == 8);  // Fail
+assertFalse(5 + 3 == 8); // Fail
+\end{lstlisting}
+
+\subsection{assertNull et assertNotNull}
+
+AssertNull et assertNotNull demandent également un seul argument qui est la variable/méthode à tester. La première réussira si l'argument est null, la seconde si le l'argument est non-null.
+
+\lstset{language=Java, numbers=left}
+\begin{lstlisting}[basicstyle=\small]
+assertNull(null);    // Success
+assertNotNull(5);    // Success
+assertNull(5);       // Fail
+assertNotNull(null); // Fail
+\end{lstlisting}
+
+\subsection{assertThrows}
+
+AssertThrows, comme assertEquals, a besion de deux arguments. Le premier est l'exception qui est attendue. Le second argument est une lambda expression qui doit être testée.
+
+\lstset{language=Java, numbers=left}
+\begin{lstlisting}[basicstyle=\small]
+assertThrows(IllegalArgumentException.class,
+             () -> origin.add(null));
+\end{lstlisting}
+
+Cette assertion réussira si la lambda expression lève l'exception passée. Elle échoura si aucune exception n'est levée ou si l'exception levée n'est pas celle attendue.
+
+section{Annotations}
+
+\subsection{Test}
+
+Cette annotation est la plus commune. Placée sur une fonction, elle marque cette dernière comme étant une fonction de test. Comme les tests sont lancés, JUnit5 recherche toutes les méthodes marquées de @Test pour les lancer.
+
+\textit{Note}: Une méthode de test ne retourne rien. Les méthodes d'assertions se chargeront de relever les succès/erreurs au besoin.
+
+\lstset{language=Java, numbers=left}
+\begin{lstlisting}[basicstyle=\small]
+@Test
+void testAddWithNullArgument() {
+    assertThrows(IllegalArgumentException.class,
+                () -> origin.add(null));
+}
+\end{lstlisting}
+
+\subsection{BeforeAll}
+
+BeforeAll doit être passée sur une méthode. Elle la marque comme étant à lancer une unique fois avant toutes les autres fonctions de la même classe pendant la phase de test. Cette annotation est notamment utile pour écrire une méthode préparant un contexte global à la classe courante.
+
+\textit{Note}: Ces méthodes doivent être statique et ne retournent rien.
+
+\lstset{language=Java, numbers=left}
+\begin{lstlisting}[basicstyle=\small]
+@BeforeAll
+static void init() {
+    origin = new Number();
+    second = new Number();
+    expect = new Number();
+}
+\end{lstlisting}
+
+\subsection{BeforeEach}
+
+Comme BeforeAll, cette annotation doit être passée sur une méthode. Cette annotation va marquer la méthode comme étant à lancer avant chaque nouveau test de la classe courrante. BeforeEach peut être utile pour préparer un contexte spécifique au test.
+
+\textit{Note}: Ces méthodes doivent être statique et ne retournent rien.
+
+\lstset{language=Java, numbers=left}
+\begin{lstlisting}[basicstyle=\small]
+@BeforeAll
+static void stup() {
+    origin.setNumber(6);
+    second.setNumber(2);
+}
+\end{lstlisting}
+
+\subsection{AfterAll}
+
+L'annotation afterAll marque une méthode comme étant à lancer après tous les tests de la classe courrante. Elle est très utile pour nettoyer l'environnement ou la base de test.
+
+\textit{Note}: Ces méthodes doivent être statique et ne retournent rien.
+
+\lstset{language=Java, numbers=left}
+\begin{lstlisting}[basicstyle=\small]
+@AfterAll
+static void shutdown() {
+    if (file != null)
+        file.close();
+}
+\end{lstlisting}
+
+\subsection{AfterEach}
+
+L'annotation afterEach est l'opposée de beforeEach. La méthode marquée par cette annotation sera alors lancée après chaque test de la classe courante.
+
+\lstset{language=Java, numbers=left}
+\begin{lstlisting}[basicstyle=\small]
+@AfterEach
+static void clean() {
+    created.delete();
+}
+\end{lstlisting}
+
+\pagebreak
+
+\section{Retour personnels}
+
+\subsection{Vincent Galinier}
+
+\subsection{Adrien Bouyssou}
+
+Ce projet a été intéressant. Je me demande d'ailleurs si je ne vais pas le poursuivre après le semestre. Ce projet m'a permit de remettre en oeuvre les compétences que j'ai acquis en entreprise tout en les utilisant plus en profondeur, j'ai donc pu en apprendre beaucoup malgré l'utilisation de technologies que je connaissais déjà, au moins de nom, comme Mockito, Lombok ou encore Jackson (utilisé pour la communication entre les Servlet et les scripts JavaScript lors des requêtes AJAX).
+
+J'ai également pu découvrir, avec une certaine appréhension, la technologie JSP dans un cas pratique. C'est peut être à cause de cette appréhension, mais ces craintes ont été confirmées. Non seulement, je n'ai pas pu être à l'aise avec ces pages, mais en plus je ne la trouve pas pratique. Tout ceci peut être également dû à une mauvaise utilisation.
+
+\end{document}
