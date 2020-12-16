@@ -2,14 +2,15 @@ package fr.utbm.jee_courses_management.repository;
 
 import fr.utbm.jee_courses_management.entity.CourseSession;
 import fr.utbm.jee_courses_management.entity.Location;
+import lombok.AllArgsConstructor;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
 
 /** Class containing methods accessing to the database on the {@link CourseSession} entity. */
+@AllArgsConstructor
 public class LocationRepository {
 
     /** {@link EntityManager} to allow requests and operations. */
@@ -20,7 +21,6 @@ public class LocationRepository {
      *
      * @return A {@link List} containing all found {@link Location}s. The returned {@link List} can be empty but it cannot be null.
      */
-    // TODO Test
     public List<Location> getLocations() {
         if (entityManager == null)
             entityManager = EntityManagerFactory.getEntityManager();
@@ -42,7 +42,6 @@ public class LocationRepository {
      *
      * @return A {@link Location} or null.
      */
-    // TODO Test
     public Location getLocation(String city) {
         if (entityManager == null)
             entityManager = EntityManagerFactory.getEntityManager();
@@ -71,7 +70,6 @@ public class LocationRepository {
      *
      * @return A {@link Location} or null.
      */
-    // TODO Test
     public Location getLocation(int id) {
         if (entityManager == null)
             entityManager = EntityManagerFactory.getEntityManager();
@@ -101,7 +99,6 @@ public class LocationRepository {
      *
      * @param location The {@link Location} to save.
      */
-    // TODO Test
     public void save(Location location) {
         if (entityManager == null)
             entityManager = EntityManagerFactory.getEntityManager();
