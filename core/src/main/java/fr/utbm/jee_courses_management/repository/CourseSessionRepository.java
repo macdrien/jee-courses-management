@@ -1,13 +1,16 @@
 package fr.utbm.jee_courses_management.repository;
 
 import fr.utbm.jee_courses_management.entity.CourseSession;
+import lombok.AllArgsConstructor;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NonUniqueResultException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /** Class containing methods accessing to the database on the {@link CourseSession} entity. */
+@AllArgsConstructor
 public class CourseSessionRepository implements Serializable {
 
     /** {@link EntityManager} to allow requests and operations. */
@@ -28,7 +31,6 @@ public class CourseSessionRepository implements Serializable {
      *
      * @return A {@link List} containing all {@link CourseSession}.
      */
-    // TODO Test
     public List<CourseSession> getCourseSessions() {
         if (clientRepository == null)
             clientRepository = new ClientRepository();
@@ -49,7 +51,6 @@ public class CourseSessionRepository implements Serializable {
      * @param courseId The id of the {@link fr.utbm.jee_courses_management.entity.Course} for which we want to retrieve all {@link CourseSession}
      * @return The {@link List} of all {@link CourseSession} for the identified {@link fr.utbm.jee_courses_management.entity.Course}
      */
-    // TODO Test
     public List<CourseSession> getCourseSessionsByCourseId(Integer courseId) {
         if (clientRepository == null)
             clientRepository = new ClientRepository();
@@ -70,7 +71,6 @@ public class CourseSessionRepository implements Serializable {
                          * We know the course so we don't need it. That stop the loop between the Course and CourseSession.
                          */
                         session.setCourse(null);
-                        session.setClientNumber(clientRepository.getNumberOfRegisteredClientsToTheCourseSession(session.getId()));
 
                         sessions.add(session);
                     }
@@ -86,7 +86,6 @@ public class CourseSessionRepository implements Serializable {
      * @return The found {@link CourseSession}.<br/>
      *          Null if the {@link CourseSession} does not exist or if an error occurred.
      */
-    // TODO Test
     public CourseSession getCourseSessionById(Integer id) {
         if (clientRepository == null)
             clientRepository = new ClientRepository();
@@ -114,7 +113,6 @@ public class CourseSessionRepository implements Serializable {
      *     <li>false else</li>
      * </ul>
      */
-    // TODO Test
     public boolean doesCourseSessionExists(Integer sessionId) {
         try {
             Object courseSessionId = entityManager.createQuery(
