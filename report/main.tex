@@ -79,7 +79,7 @@ JUnit est découpé en plusieurs artifacts qui ont chacun leurs usages. Dans tou
 JUnit Jupiter Platform est le module qui permet de lancer les tests unitaires. Il se charge depuis l'artifact junit-jupiter-engine. \\ Cet artifact fourni également l'API TestEngine. Cette API permet de créer ses propres frameworks de test. Ces frameworks pourront ensuite être utilisé grâce à l'artifact junit-jupiter-engine.
 
 \lstset{language=XML, numbers=left}
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\small]
 <dependency>
     <groupId>org.junit.jupiter</groupId>
     <artifactId>junit-jupiter-engine</artifactId>
@@ -93,7 +93,7 @@ JUnit Jupiter Platform est le module qui permet de lancer les tests unitaires. I
 JUnit Jupiter API est la dépendence qui apporte les outils de test (méthodes, annotations, ...).
 
 \lstset{language=XML, numbers=left}
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\small]
 <dependency>
     <groupId>org.junit.jupiter</groupId>
     <artifactId>junit-jupiter-api</artifactId>
@@ -107,7 +107,7 @@ JUnit Jupiter API est la dépendence qui apporte les outils de test (méthodes, 
 Cette dépendance n'a pas été utilisée dans le projet d'entraînement. Cependant elle peut s'avérer très utile. \\ JUnit Jupiter Vintage est une dépendance de JUnit5 qui embarque les fonctionnalités des versions 3 et 4 de JUnit. Cette dépendance n'est donc pas souvent utile. Mais elle peut l'être dans le cadre d'une montée de version de JUnit dans un projet déjà testé.
 
 \lstset{language=XML, numbers=left}
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\small]
 <dependency>
     <groupId>org.junit.vintage</groupId>
     <artifactId>junit-vintage-engine</artifactId>
@@ -121,7 +121,7 @@ Cette dépendance n'a pas été utilisée dans le projet d'entraînement. Cepend
 Surfire ne prend pas JUnit5 en charge par défaut. Pour que maven puisse lancer les tests JUnits, il faut donc ajouter un plugin au build maven. \\ Une fois ajouté, la commande 'mvn test' fera tourner les tests JUnit5 Jupiter.
 
 \lstset{language=XML, numbers=left}
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\small]
 <build>
     <plugins>
     	<!-- ... -->
@@ -146,14 +146,14 @@ Surfire ne prend pas JUnit5 en charge par défaut. Pour que maven puisse lancer 
 </build>
 \end{lstlisting}
 
-\subsection{Méthodes d'assertions}
+\section{Méthodes d'assertions}
 
 Les méthodes d'assertions sont, avec l'annotation Test, les principaux outils utilisés pour les tests. C'est pour cela que nous verrons ces méthodes en premier. Les méthodes d'assertions sont un ensemble de fonctions qui effectueront un test simple et retourneront un état validé ou échoué. \\ Si la méthode d'assertion échoue, alors elle va stopper la fonction de test en la marquant comme échouée. \\ Si elle réussie, la fonction de test va continuer. Si le processus de test arrive à la fin de la fonction de test sans lever d'erreur ou faire échouer une assertion, alors le test sera marqué comme réussi.
 
 Il y a une grand nombre de méthodes d'assertions, aussi, nous ne verront que les plus communes. Toutes ces méthodes sont trouvable dans la clases org.junit.jupiter.api.Assertions. Pour des raisons pratiques, elles seront importées de manière statique via l'import suivant:
 
 \lstset{language=Java, numbers=left}
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\small]
 import static org.junit.jupiter.api.Assertions.*;
 \end{lstlisting}
 
@@ -161,63 +161,63 @@ La plus part des méthodes qui vont être présentées peuvent prendre un dernie
 
 Les méthodes que nous utilisons le plus souvent sont les suivantes:
 
-\subsubsection{assertEquals}
+\subsection{assertEquals}
 
 Cette méthode demande deux arguments. Le premier est le résultat attendu, le second est la variable a tester.
 
 \lstset{language=Java, numbers=left}
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\small]
 assertEquals(expect, origin.add(second));
 \end{lstlisting}
 
 Cette méthode va appeler la méthode equals du premier argument en y donnant le second argument. Si l'objet donné n'implémente pas la méthode equals, alors la méthode utilisera l'opérateur == pour faire son test. Le test sera alors fait sur les références des deux objets.
 
-\subsubsection{assertTrue et assertFalse}
+\subsection{assertTrue et assertFalse}
 
 Ces deux méthodes n'ont besoin que d'un seul argument. Cet argument est une condition ou une valeur booléenne à tester. L'assertion réussira si la condition booléenne est vraie pour la première méthode, ou fausse  pour la seconde méthode.
 
 \lstset{language=Java, numbers=left}
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\small]
 assertTrue(5 + 3 == 8);  // Success
 assertFalse(5 + 5 == 8); // Success
 assertTrue(5 + 5 == 8);  // Fail
 assertFalse(5 + 3 == 8); // Fail
 \end{lstlisting}
 
-\subsubsection{assertNull et assertNotNull}
+\subsection{assertNull et assertNotNull}
 
 AssertNull et assertNotNull demandent également un seul argument qui est la variable/méthode à tester. La première réussira si l'argument est null, la seconde si le l'argument est non-null.
 
 \lstset{language=Java, numbers=left}
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\small]
 assertNull(null);    // Success
 assertNotNull(5);    // Success
 assertNull(5);       // Fail
 assertNotNull(null); // Fail
 \end{lstlisting}
 
-\subsubsection{assertThrows}
+\subsection{assertThrows}
 
 AssertThrows, comme assertEquals, a besion de deux arguments. Le premier est l'exception qui est attendue. Le second argument est une lambda expression qui doit être testée.
 
 \lstset{language=Java, numbers=left}
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\small]
 assertThrows(IllegalArgumentException.class,
              () -> origin.add(null));
 \end{lstlisting}
 
 Cette assertion réussira si la lambda expression lève l'exception passée. Elle échoura si aucune exception n'est levée ou si l'exception levée n'est pas celle attendue.
 
-\subsection{Annotations}
+section{Annotations}
 
-\subsubsection{Test}
+\subsection{Test}
 
 Cette annotation est la plus commune. Placée sur une fonction, elle marque cette dernière comme étant une fonction de test. Comme les tests sont lancés, JUnit5 recherche toutes les méthodes marquées de @Test pour les lancer.
 
 \textit{Note}: Une méthode de test ne retourne rien. Les méthodes d'assertions se chargeront de relever les succès/erreurs au besoin.
 
 \lstset{language=Java, numbers=left}
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\small]
 @Test
 void testAddWithNullArgument() {
     assertThrows(IllegalArgumentException.class,
@@ -225,14 +225,14 @@ void testAddWithNullArgument() {
 }
 \end{lstlisting}
 
-\subsubsection{BeforeAll}
+\subsection{BeforeAll}
 
 BeforeAll doit être passée sur une méthode. Elle la marque comme étant à lancer une unique fois avant toutes les autres fonctions de la même classe pendant la phase de test. Cette annotation est notamment utile pour écrire une méthode préparant un contexte global à la classe courante.
 
 \textit{Note}: Ces méthodes doivent être statique et ne retournent rien.
 
 \lstset{language=Java, numbers=left}
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\small]
 @BeforeAll
 static void init() {
     origin = new Number();
@@ -241,14 +241,14 @@ static void init() {
 }
 \end{lstlisting}
 
-\subsubsection{BeforeEach}
+\subsection{BeforeEach}
 
 Comme BeforeAll, cette annotation doit être passée sur une méthode. Cette annotation va marquer la méthode comme étant à lancer avant chaque nouveau test de la classe courrante. BeforeEach peut être utile pour préparer un contexte spécifique au test.
 
 \textit{Note}: Ces méthodes doivent être statique et ne retournent rien.
 
 \lstset{language=Java, numbers=left}
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\small]
 @BeforeAll
 static void stup() {
     origin.setNumber(6);
@@ -256,14 +256,14 @@ static void stup() {
 }
 \end{lstlisting}
 
-\subsubsection{AfterAll}
+\subsection{AfterAll}
 
 L'annotation afterAll marque une méthode comme étant à lancer après tous les tests de la classe courrante. Elle est très utile pour nettoyer l'environnement ou la base de test.
 
 \textit{Note}: Ces méthodes doivent être statique et ne retournent rien.
 
 \lstset{language=Java, numbers=left}
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\small]
 @AfterAll
 static void shutdown() {
     if (file != null)
@@ -271,16 +271,28 @@ static void shutdown() {
 }
 \end{lstlisting}
 
-\subsubsection{AfterEach}
+\subsection{AfterEach}
 
 L'annotation afterEach est l'opposée de beforeEach. La méthode marquée par cette annotation sera alors lancée après chaque test de la classe courante.
 
 \lstset{language=Java, numbers=left}
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\small]
 @AfterEach
 static void clean() {
     created.delete();
 }
 \end{lstlisting}
+
+\pagebreak
+
+\section{Retour personnels}
+
+\subsection{Vincent Galinier}
+
+\subsection{Adrien Bouyssou}
+
+Ce projet a été intéressant. Je me demande d'ailleurs si je ne vais pas le poursuivre après le semestre. Ce projet m'a permit de remettre en oeuvre les compétences que j'ai acquis en entreprise tout en les utilisant plus en profondeur, j'ai donc pu en apprendre beaucoup malgré l'utilisation de technologies que je connaissais déjà, au moins de nom, comme Mockito, Lombok ou encore Jackson (utilisé pour la communication entre les Servlet et les scripts JavaScript lors des requêtes AJAX).
+
+J'ai également pu découvrir, avec une certaine appréhension, la technologie JSP dans un cas pratique. C'est peut être à cause de cette appréhension, mais ces craintes ont été confirmées. Non seulement, je n'ai pas pu être à l'aise avec ces pages, mais en plus je ne la trouve pas pratique. Tout ceci peut être également dû à une mauvaise utilisation.
 
 \end{document}

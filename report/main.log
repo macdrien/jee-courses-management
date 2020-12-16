@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.5.5)  13 DEC 2020 21:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.5.5)  16 DEC 2020 20:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -844,7 +844,7 @@ Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 ) (./pagetitre.tex
-<logo.jpg, id=83, 398.4486pt x 170.7981pt>
+<logo.jpg, id=91, 398.4486pt x 170.7981pt>
 File: logo.jpg Graphic file (type jpg)
 <use logo.jpg>
 Package pdftex.def Info: logo.jpg  used on input line 2.
@@ -878,43 +878,46 @@ File: lstlang1.sty 2020/03/24 1.8d listings language file
 (c:/texlive/2020/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
 ) [3] [4]
-Overfull \hbox (70.69093pt too wide) in paragraph at lines 134--135
+Overfull \hbox (30.99368pt too wide) in paragraph at lines 134--135
 [][][][][][][][][][][][][][][][][][][] 
  []
 
 [5] (c:/texlive/2020/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 ) [6] [7]
-[8] [9]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 286.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 286.
+[8] [9] [10]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 298.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 298.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 286.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 286.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 298.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 298.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 6495DB256D2F05E5CF017CB061E85DE1;1268.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 286.
+(rerunfilecheck)             Checksum: 3F70D1E7DBFE3CF1DAD0B6FDF6C0A5AB;1299.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 298.
  ) 
 Here is how much of TeX's memory you used:
- 22503 strings out of 480682
- 400205 string characters out of 5908554
- 848366 words of memory out of 5000000
- 37745 multiletter control sequences out of 15000+600000
- 544555 words of font info for 53 fonts, out of 8000000 for 9000
+ 22514 strings out of 480682
+ 400242 string characters out of 5908554
+ 848002 words of memory out of 5000000
+ 37750 multiletter control sequences out of 15000+600000
+ 546804 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 52i,7n,56p,644b,1881s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}{c:/tex
-live/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}<c:/texlive/2020/
-texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb><c:/texlive/2020/texmf-dist
-/fonts/type1/public/cm-super/sfbx1440.pfb><c:/texlive/2020/texmf-dist/fonts/typ
-e1/public/cm-super/sfbx1728.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/
-cm-super/sfbx2488.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/cm-super/s
-frm1200.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pf
-b><c:/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on main.pdf (9 pages, 252524 bytes).
+ 52i,7n,56p,644b,1932s stack positions out of 5000i,500n,10000p,200000b,80000s
+{c:/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{c:/texl
+ive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<c:/texlive/2020/
+texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb><c:/texlive/2020/texmf-dist
+/fonts/type1/public/cm-super/sfbx1200.pfb><c:/texlive/2020/texmf-dist/fonts/typ
+e1/public/cm-super/sfbx1440.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/
+cm-super/sfbx1728.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/cm-super/s
+fbx2488.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pf
+b><c:/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texl
+ive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb><c:/texlive/2020/t
+exmf-dist/fonts/type1/public/cm-super/sfti1095.pfb><c:/texlive/2020/texmf-dist/
+fonts/type1/public/cm-super/sfti1200.pfb>
+Output written on main.pdf (10 pages, 315958 bytes).
 PDF statistics:
- 300 PDF objects out of 1000 (max. 8388607)
- 278 compressed objects within 3 object streams
- 120 named destinations out of 1000 (max. 500000)
- 170 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 328 PDF objects out of 1000 (max. 8388607)
+ 301 compressed objects within 4 object streams
+ 123 named destinations out of 1000 (max. 500000)
+ 186 words of extra memory for PDF output out of 10000 (max. 10000000)
 
