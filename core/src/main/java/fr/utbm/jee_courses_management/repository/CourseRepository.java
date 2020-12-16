@@ -1,13 +1,16 @@
 package fr.utbm.jee_courses_management.repository;
 
 import fr.utbm.jee_courses_management.entity.Course;
+import lombok.AllArgsConstructor;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /** Class containing methods accessing to the database on the {@link Course} entity. */
+@AllArgsConstructor
 public class CourseRepository implements Serializable {
 
     /** {@link EntityManager} to allow requests and operations. */
