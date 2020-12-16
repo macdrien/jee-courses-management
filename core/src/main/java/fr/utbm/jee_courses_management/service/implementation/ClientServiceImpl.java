@@ -4,8 +4,10 @@ import fr.utbm.jee_courses_management.entity.Client;
 import fr.utbm.jee_courses_management.repository.ClientRepository;
 import fr.utbm.jee_courses_management.service.ClientService;
 import fr.utbm.jee_courses_management.service.CourseSessionService;
+import lombok.AllArgsConstructor;
 
 /** An implementation of the service {@link ClientService}. */
+@AllArgsConstructor
 public class ClientServiceImpl implements ClientService {
 
     /** A repository a access to the {@link Client} entity. */
@@ -23,7 +25,6 @@ public class ClientServiceImpl implements ClientService {
     }
 
     /** @see ClientService#registerClient(Client) */
-    // TODO Test
     @Override
     public Client registerClient(Client client) {
         if (client.getFirstname() == null || client.getFirstname().isBlank() ||
