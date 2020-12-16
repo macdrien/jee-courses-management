@@ -4,6 +4,7 @@ import fr.utbm.jee_courses_management.entity.Course;
 import fr.utbm.jee_courses_management.service.CourseService;
 import fr.utbm.jee_courses_management.service.implementation.CourseServiceImpl;
 import fr.utbm.jee_courses_management.util.Filter;
+import lombok.AllArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * Controller to publish operations on {@link Course}
  */
+@AllArgsConstructor
 public class CourseController implements Serializable {
 
     /** Service to run operations on {@link Course} */
@@ -30,7 +32,6 @@ public class CourseController implements Serializable {
      * @param filter An object which describes criteria for returned courses
      * @return A {@link List} of {@link Course} which match with the filter.
      */
-    // TODO Test
     public List<Course> getCourses(Filter filter) {
         return service.getCourses(filter);
     }
