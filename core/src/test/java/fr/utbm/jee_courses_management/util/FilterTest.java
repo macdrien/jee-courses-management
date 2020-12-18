@@ -5,8 +5,6 @@ import fr.utbm.jee_courses_management.entity.CourseSession;
 import fr.utbm.jee_courses_management.entity.Location;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +17,6 @@ import java.util.stream.Collectors;
  *
  * @author macdrien
  */
-@RunWith(JUnitPlatform.class)
 public class FilterTest {
 
     private static List<Course> courses;
@@ -118,7 +115,6 @@ public class FilterTest {
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
-    // TODO fix it by removing all courses which do not have any session
     @Test
     public void testFilterCoursesAndSessionsWithNonNullStartingDateTakingNoCoursesAndNoOtherOptions() {
         Filter filter = new Filter();
@@ -152,7 +148,6 @@ public class FilterTest {
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
-    // TODO Fix with more research
     @Test
     public void testFilterCoursesAndSessionsWithNonNullEndingDateTakingNoCoursesAndNoOtherOptions() {
         Filter filter = new Filter();
@@ -186,7 +181,6 @@ public class FilterTest {
     }
 
     /** Test method for {@link Filter#filterCoursesAndSessions(List, Filter)} */
-    // cf comment on {@link FilterTest#testFilterCoursesAndSessionsWithNonNullStartingDateTakingNoCoursesAndNoOtherOptions()}
     @Test
     public void testFilterCoursesAndSessionsWithCityTakingNoSessionsAndNoOtherOption() {
         Filter filter = new Filter();
